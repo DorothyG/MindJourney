@@ -1,0 +1,188 @@
+<div id="path">
+  <div class="title logo pull-left">
+    <font>课前预习管理</font>
+  </div>
+  <div class="component ">
+    <ol class="breadcrumb component pull-right">
+      <li><a class="text">教学资源</a></li>
+      <li><a class="active text">课前预习管理</a></li>
+    </ol>
+  </div>
+</div>
+
+<div id="main">
+  <form id="search" class="back">
+    <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+      <i class="fa fa-search"></i></button>
+    <input type="text" id="searchContent" ng-model="searchContent"/>
+  </form>
+  <div class="back">
+    <div id="tool">
+      <div id="operate" class="subtitle input-field">
+        <button class="btn btn-primary" ng-click="modify()">修改
+          <i class="fa fa-pencil"></i></button>
+        <!--<button class="btn btn-primary modal-trigger" data-target="add">增加-->
+          <!--<i class="fa fa-gavel"></i></button>-->
+        <button class="btn btn-primary" data-ui-sref="index.classBeforeCreate" data-ui-sref-active="active">增加
+          <i class="fa fa-gavel"></i></button>
+        <button class="btn btn-primary" ng-click="delete()">删除
+          <i class="fa fa-eraser"></i></button>
+        <button class="btn btn-primary right" ng-click="refresh()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <table id="info" class="bordered highlight hoverable centered">
+      <thead>
+      <tr>
+        <th class="forCheckbox">
+          <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+          <label for="cboxchecked"></label>
+        </th>
+        <th>课前预习编码</th>
+        <th>课前预习简述</th>
+        <th>组织编码</th>
+        <th>备注</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="classBefore in classBefores " ng-click="checkTr($event, this)">
+        <td class="forCheckbox">
+          <input type="checkbox" id="{{classBefore._id}}" name="isSelected" value="{{classBefore}}"
+                 ng-checked="Checked(classBefore._id)" ng-click="Check($event, classBefore._id)"/>
+          <label for="{{classBefore._id}}"></label>
+        </td>
+        <td>{{ classBefore.keQianCode || "空" }}</td>
+        <td>
+          <a editable-text="classBefore.keQianName">{{ classBefore.keQianName || "空" }}</a>
+        </td>
+        <td>
+          <!--<a editable-text="classBefore.idGroup.groupName">{{ classBefore.idGroup.groupName || "空" }}</a>-->
+          <a editable-select="classBefore.idGroup" e-ng-options="group.groupName for group in groups">
+            {{ classBefore.idGroup.groupName || "空" }}
+          </a>
+        </td>
+        <td>
+          <a editable-text="classBefore.memo">{{ classBefore.memo || "空" }}</a>
+        </td>
+        <td>
+          <button class="btn btn-primary modal-trigger" data-target="view" ng-click="transfer(classBefore)">查看课件</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="loading">
+      <pac-man></pac-man>
+    </div>
+    <ul class="pagination">
+      <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+      <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+      </li>
+      <span class="paginationText">当前是第{{index}}页</span>
+    </ul>
+  </div>
+</div>
+<!---->
+<!--<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建课前预习" aria-hidden="true">-->
+  <!--<div class="modal-content row">-->
+    <!--<h4>新建课前预习</h4>-->
+    <!--<form id="formAdd" class="row" role="form">-->
+      <!--<div class="input-field col s12">-->
+        <!--<input type="text" class="validate" id="classBeforeName" name="classBeforeName"-->
+               <!--ng-model="add.classBeforeName" />-->
+        <!--<label for="classBeforeName">课前预习简述</label>-->
+      <!--</div>-->
+      <!--<div class="input-field col s12">-->
+        <!--<select class="form-control" ng-model="add.idGroup" ng-options="group._id as group.groupName for group in groups">-->
+          <!--<option value="" disabled selected>所属学校</option>-->
+          <!--&lt;!&ndash;<option value="{{subject._id}}">{{subject.subjectName}}</option>&ndash;&gt;-->
+        <!--</select>-->
+        <!--<br />-->
+        <!--&lt;!&ndash;<input type="text" class="validate" id="idGroup" name="idGroup"&ndash;&gt;-->
+               <!--&lt;!&ndash;ng-model="add.idGroup" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<label for="idGroup">组织编码</label>&ndash;&gt;-->
+      <!--</div>-->
+      <!--<div class="input-field col s12">-->
+        <!--<textarea class="materialize-textarea" rows="2" id="memo" name="memo"-->
+                  <!--ng-model="add.memo"></textarea>-->
+        <!--<label for="memo">备注</label>-->
+      <!--</div>-->
+    <!--</form>-->
+  <!--</div>-->
+  <!--<div class="modal-footer">-->
+    <!--<button class="modal-action waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>-->
+    <!--<button class="modal-action waves-effect waves-green btn-flat" ng-click="add = null">重置</button>-->
+    <!--<button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="add = null">取消</button>-->
+  <!--</div>-->
+<!--</div>-->
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看课件" aria-hidden="true">
+  <div class="modal-content">
+    <h4>查看课件</h4>
+    <div class="input-field col s12">
+      <label>课件名称</label><br /><br />
+      <span>{{view.idResource.resourceName}}</span>
+    </div>
+    <div class="input-field col s12">
+      <label>附件下载</label><br /><br />
+      <a ng-show="view.idResource.resourceFile != null" ng-repeat="files in view.idResource.resourceFile"
+         href="http://120.77.253.155/{{files.idFile.filePath}}">{{files.idFile.fileName}}<br /></a>
+      <span ng-show="view.idResource.resourceFile == null">暂无附件</span>
+    </div>
+    <div class="input-field col s12">
+      <label>所属科目</label><br /><br />
+      <span>{{view.idResource.idSubject.subjectName}}</span>
+    </div>
+    <div class="input-field col s12">
+      <label>所属章节</label><br /><br />
+      <span>{{view.idResource.idChapter.chapterName}}</span>
+    </div>
+    <div class="input-field col s12">
+      <label>所属知识点</label><br /><br />
+      <span>{{view.idResource.idPoint.pointName}}</span>
+    </div>
+    <div class="input-field col s12">
+      <label>课件正文</label><br /><br />
+      <span>{{view.idResource.resourceContent}}</span>
+    </div>
+    <!--防止有多个资源的时候使用这种折叠式的布局-->
+    <!--<div class="input-field col s12">-->
+      <!--<ul class="collapsible" data-collapsible="expandable"-->
+          <!--ng-show="view.idResource != null">-->
+        <!--<li>-->
+          <!--<div class="collapsible-header">-->
+            <!--<span>{{view.idResource.resourceName}}</span>-->
+          <!--</div>-->
+          <!--<div class="collapsible-body">-->
+            <!--<div class="input-field col s12">-->
+              <!--<label>附件下载</label><br /><br />-->
+              <!--<a ng-repeat="files in view.idResource.resourceFile"-->
+                 <!--href="http://120.77.253.155/{{files.idFile.filePath}}">{{files.idFile.fileName}}<br /></a>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12">-->
+              <!--<label>所属科目</label><br /><br />-->
+              <!--<span>{{view.idResource.idSubject.subjectName}}</span>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12">-->
+              <!--<label>所属章节</label><br /><br />-->
+              <!--<span>{{view.idResource.idChapter.chapterName}}</span>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12">-->
+              <!--<label>所属知识点</label><br /><br />-->
+              <!--<span>{{view.idResource.idPoint.pointName}}</span>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12">-->
+              <!--<label>课件正文</label><br /><br />-->
+              <!--<span>{{view.idResource.resourceContent}}</span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</li>-->
+      <!--</ul>-->
+      <!--<span ng-show="view.idResource == null">暂无附件</span>-->
+    <!--</div>-->
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+  </div>
+</div>
+
+

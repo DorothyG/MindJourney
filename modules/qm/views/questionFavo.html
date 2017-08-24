@@ -1,0 +1,164 @@
+<div id="path">
+  <div class="title logo pull-left">
+    <font>题目收藏</font>
+  </div>
+  <div class="component ">
+    <button class="btn toolbar pull-right"><i class="fa fa-angle-left"></i></button>
+    <ol class="breadcrumb component pull-right">
+      <li><a class="text">题库管理</a></li>
+      <li><a class="active text">题目收藏</a></li>
+    </ol>
+  </div>
+</div>
+<div id="main">
+  <form id="search" class="back">
+    <button class="waves-effect waves-light btn btn-primary" id="searchBtn" ng-click="search()">查找
+      <i class="fa fa-search"></i></button>
+    <input type="text" id="searchContent" ng-model="searchContent"/>
+  </form>
+  <div class="back">
+    <div id="tool">
+      <div id="operate" class="subtitle form-group">
+        <button class="waves-effect waves-light btn btn-primary" ng-click="modify()">修改
+          <i class="fa fa-pencil"></i></button>
+        <button class="waves-effect waves-light btn btn-primary" ng-click="delete()">删除
+          <i class="fa fa-eraser"></i></button>
+      </div>
+    </div>
+    <table id="info" class="bordered striped hoverable centered">
+      <thead>
+      <tr>
+        <th></th>
+        <th>用户编码</th>
+        <th>用户姓名</th>
+        <th>备注</th>
+        <th>所属学校</th>
+        <th>所属班级</th>
+        <th>所属年级</th>
+        <th>关联用户</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="student in students" >
+        <td>
+          <input type="checkbox" id="{{student.userCode}}" name="isSelected" value="{{student}}"/>
+          <label for="{{student.userCode}}"></label>
+        </td>
+        <td>
+          {{ student.userCode || "空" }}
+        </td>
+        <td>
+          <a editable-text="student.userName">{{ student.userName || "空" }}</a>
+        </td>
+        <td>
+          <a editable-text="student.memo">{{ student.memo || "空" }}</a>
+        </td>
+        <td>
+          <a editable-text="student.idGroup">{{ student.idGroup || "空" }}</a>
+        </td>
+        <td>
+          <a editable-text="student.Class">{{ student.Class || "空" }}</a>
+        </td>
+        <td>
+          <a editable-text="student.grade">{{ student.grade || "空" }}</a>
+        </td>
+        <td>
+          <a editable-text="student.idUser">{{ student.idUser || "空" }}</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建学生信息" aria-hidden="true">
+  <div class="modal-content row">
+    <h4>新建学生信息</h4>
+    <form id="formAdd" class="row" role="form">
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="userName" name="userName"
+               ng-model="add.userName" />
+        <label for="userName">用户姓名</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="userPwd" name="userPwd"
+               ng-model="add.userPwd" />
+        <label for="userPwd">用户密码</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="memo" name="memo"
+               ng-model="add.memo" />
+        <label for="memo">备注</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="idGroup" name="idGroup"
+               ng-model="add.idGroup" />
+        <label for="idGroup">所属学校</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="Class" name="Class"
+               ng-model="add.Class" />
+        <label for="Class">所属班级</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="grade" name="grade"
+               ng-model="add.grade" />
+        <label for="grade">所属年级</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>
+    <button class="modal-action waves-effect waves-green btn-flat">重置</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+  </div>
+</div>
+<!--<div id="main">-->
+  <!--<form id="search" class="back form-horizontal">-->
+    <!--<button class="btn btn-primary pull-left" id="searchBtn">查找-->
+      <!--<i class="fa fa-search"></i></button>-->
+    <!--<input type="text" class="form-control" id="searchContent" />-->
+  <!--</form>-->
+  <!--<div class="back">-->
+    <!--<div id="tool">-->
+      <!--<div id="operate" class="subtitle form-group">-->
+        <!--<button class="btn btn-primary" ng-click="modify()">修改-->
+          <!--<i class="fa fa-pencil"></i></button>-->
+        <!--&lt;!&ndash;<button class="waves-effect waves-light btn btn-primary modal-trigger" data-target="add">增加&ndash;&gt;-->
+          <!--&lt;!&ndash;<i class="fa fa-gavel"></i></button>&ndash;&gt;-->
+        <!--<button class="waves-effect waves-light btn btn-primary" ng-click="delete()">删除-->
+          <!--<i class="fa fa-eraser"></i></button>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<table id="info" class="bordered striped hoverable centered">-->
+      <!--<thead>-->
+      <!--<tr>-->
+        <!--<th>题型编号</th>-->
+        <!--<th>题型名称</th>-->
+        <!--<th>备注</th>-->
+        <!--&lt;!&ndash;<th></th>&ndash;&gt;-->
+        <!--&lt;!&ndash;<th>修改时间</th>&ndash;&gt;-->
+        <!--&lt;!&ndash;<th>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="dropdown">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a class="btn btn-default" class="dropdown-toggle" data-toggle="dropdown">请选择查看类型</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ul id="type" class="dropdown-menu">&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><a>章节</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><a>知识点</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</th>&ndash;&gt;-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr ng-repeat="questionType in questionTypes" ng-class="{true:'active', false:''}[isSelected]" ng-click="trSelected(an.index)" >-->
+        <!--<td ng-bind="questionType.typeCode"></td>-->
+        <!--<td ng-bind="questionType.typeName"></td>-->
+        <!--&lt;!&ndash;<td ng-bind="questionType.idGroup"></td>&ndash;&gt;-->
+        <!--<td ng-bind="questionType.memo"></td>-->
+        <!--&lt;!&ndash;<td>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a role="button" class="btn btn-primary" data-ui-sref="subjectInfo" data-ui-sref-active="active">查看</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+      <!--</tr>-->
+      <!--</tbody>-->
+    <!--</table>-->
+  <!--</div>-->
+<!--</div>-->

@@ -1,0 +1,31 @@
+
+<div class="Foreground">
+        <div class="piece large z-depth-3">
+            <form id="formLogin" class="row" role="form">
+                <div class="input-field col s8">
+                    <input type="text" class="validate" id="account" name="account"
+                           ng-model="account" />
+                    <label for="account">账号</label>
+                </div>
+                <div class="input-field col s8">
+                    <input type="password" class="validate" id="password" name="password"
+                           ng-model="password" />
+                    <label for="password">密码</label>
+                </div>
+                <div class="input-field col s8">
+                    <button class="btn btn-primary col-sm-12" ng-click="login(account, password)">登录</button>
+                </div>
+                <div id="loging" class="input-field col s8" hidden>
+                    <p>登录中...</p>
+                </div>
+                <!--<div class="input-field col s8">-->
+                <!--<button class="btn btn-primary col-sm-12" ng-click="register()">注册</button>-->
+                <!--</div>-->
+            </form>
+        </div>
+    <span class="loginLogo">Mind Journey<br />
+        <span class="subLogo">智慧教室平台</span>
+    </span>
+</div>
+
+

@@ -1,0 +1,430 @@
+/*消除浏览器差异*/
+*{
+  padding: 0;
+  margin: 0;
+}
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  width: 100%;
+  /*overflow: hidden;*/
+  //background-color: rgb(251, 255, 245, 1);
+  background-image: url(../images/waterColorTextureGreen.jpg);
+  //background-blend-mode: screen;
+}
+
+/*主页面*/
+#index{
+  width: 100%;
+  height: 100%;
+}
+
+/*顶部导航栏*/
+#navTop{
+  width: 100%;
+  height: 60px;
+  background-color: #444d53;
+  position: fixed;
+  top: 0;
+  /*z-index: 0;*/
+}
+.avator {
+  height: 3%; !important;
+  margin: 0;
+  padding: 0;
+  opacity: 0.3;
+  /*margin: 10px;*/
+}
+
+/*主内容部分*/
+#content{
+  width: 100%;
+  height: 100%;
+  margin: 60px 0 0 0;
+  padding: 0;
+}
+
+/*左侧导航栏*/
+.navLeftBack{
+  float: left;
+  height: 100%;
+  width: 15%;
+  background-color: #67bd45;
+  background-image: url(../images/waterColorTextureGreen.jpg);
+  background-blend-mode: multiply;
+  position: fixed;
+  /*z-index: -1;*/
+
+}
+#navLeft{
+  padding: 0;
+  margin: 0; !important;
+}
+.nav a{
+  color: #d6e4db;
+}
+
+/*工作台*/
+#platform{
+  height: auto;
+  min-height: 524px;
+  width: 85%;
+  position: absolute;
+  /*z-index: -1;*/
+  margin: 0 0 0 15%;
+  padding: 0 4px 0 4px;
+}
+.loading{
+  margin: 0 50%;
+  padding: 5px;
+}
+
+/*侧边导航*/
+#navSide{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+/*搜索区域*/
+#searchContent{
+  width: 500px;
+  margin: auto;
+}
+#add{
+  clear: both;
+}
+
+/*登录界面*/
+.piece{
+  background-color: #d6e4db;
+  border: 1px solid #4db6ac;
+  padding: 10px;
+  margin: 20% 0 0 73%;
+  display: none;
+}
+.large{
+  width: 40%;
+  height: 300px;
+  opacity: 0.9;
+  float: left;
+}
+.Foreground{
+  width: 80%;
+  height: 100%;
+  background-image: url("../images/loginBg.jpg");
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  overflow: hidden;
+}
+.loginLogo{
+  margin: -20% 30% 0 10%;
+  float: right;
+  padding: 20px;
+  font-size: 60px;
+  color: #d6e4db;
+}
+.subLogo{
+  margin: 15% 0 0 45%;
+  font-size: 30px;
+  color: #d6e4db;
+}
+.curtain{
+  width: 100%;
+  height: 100%;
+  background-color: #d6e4db;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.loader{
+  width: 100%;
+  height: 100%;
+}
+.halign{
+  position: relative;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+    .navFirst,
+    .navSecond,
+    .navThird{
+        display: none;
+    }
+  #navLeft{
+    width: 60px;
+  }
+  .piece{
+    margin: 40% 0 0 73%;
+  }
+  .loginLogo{
+    display: none;
+  }
+  .logoLighter{
+    display: none;
+  }
+
+}
+.container{
+  padding: 0;
+}
+
+/*改写materialize的部分参数*/
+
+/*顶部导航栏*/
+
+/*平台名称*/
+#logo{
+  color: #ef6c00;
+  /*color: #ED6E25;*/
+  padding: 0 0 0 10px;
+}
+.logo{
+  font-size: 20px;
+  float: left;
+  /*line-height: 60px;*/
+}
+.logoLighter{
+  font-weight: lighter;
+  font-size: 14px;
+  /*float: left;*/
+}
+#login{
+  float: right;
+  padding: 12px 16px 18px 0;
+}
+#avatorFormat{
+  background-color: #fbfff5;
+  width: 16%;
+  position: fixed;
+  margin: 60px 0 0 84%;
+  padding: 5px 0 5px 0;
+  font-weight: lighter;
+  /*font-family: "迷简细黑";*/
+  word-spacing: 0.4em;
+  display: none;
+  z-index: 1;
+}
+#avatorField{
+  float: right;
+}
+#logInfo{
+  float: left;
+  padding: 0 10px 0 0;
+  text-align: right;
+}
+#logout{
+  color: #ef6c00;
+  font-size: 10px;
+}
+.text{
+  font-size: 14px;
+  color: #ef6c00;
+}
+.decoration{
+  margin: 56px 0 0 0;
+  //padding: 60px 0 0 0;
+  height: 3px;
+  width: 100%;
+  background-color: #8ecc14;
+  float: left;
+  position: fixed;
+  z-index: 1;
+}
+.seperate{
+  margin: 5px 0 5px 0;
+  //background-color: #67bd45;
+  //border: 0.1px dotted #67bd45;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+/*@font-face {*/
+  /*font-family: "迷简细黑";*/
+  /*src: url("../fonts/miniBlack.ttf");*/
+/*}*/
+ul.navLeft{
+  list-style: none;
+  padding: 0 0 0 0;
+  color: #fdfffb;
+  font-size: 16px;
+  font-weight: lighter;
+  word-spacing: 0.4em;
+}
+.itemTitle{
+  padding: 10px 0 10px 15px;
+  font-size: 14px;
+  color: #fafcf7;
+  background-color: #99cc66;
+}
+
+
+#carouselBroadcast{
+  width: 98%;
+  height: 200px;
+  padding: 0 2px 0 2px;
+  margin: 20px auto 0 auto;
+  box-shadow: 0 8px 4px 0 #d6e4db;
+  border-top: 2px solid #d6e4db;
+}
+#path{
+  /*margin: 0 10px 0 10px;*/
+  width: 100%;
+  height: 40px;
+  //background-color: #fbfff5;
+  //background-color: #e7feec;
+  background-color: #d6e4db;
+  //box-shadow: 0 6px 2px 0 #ecefe6;
+  box-shadow: 0 4px 1px 0 #67bd45;
+  //margin: 0 0 0 8px;
+  //padding: 16px;
+  left: 0;
+}
+.title{
+  font-size: 20px;
+  color: #ef6c00;
+  line-height: 40px;
+  padding: 0 0 0 10px;
+}
+.component{
+  width: auto;
+  height: 40px;
+  font-size: 16px;
+  color: #ef6c00;
+  padding: 0 8px 0 8px;
+  margin: 0;
+}
+.unactive{
+  color: #000000;
+}
+
+/*右侧窗口*/
+#windowRight{
+  background-color: #fbfff5;
+  width: 16%;
+  position: fixed;
+  margin: 60px 0 0 84%;
+  padding: 5px 0 5px 0;
+  font-weight: lighter;
+  /*font-family: "迷简细黑";*/
+  word-spacing: 0.4em;
+  display: none;
+  z-index: 1;
+}
+/*#navRight{
+  height: auto;;
+  width: 200px;
+  background-color: #99cc00;
+  float: left;
+  z-index: 1;
+  margin: 60px 0 0 0;*/
+
+.navRight{
+  padding: 0;
+}
+.itemRight{
+  list-style: none;
+  //padding: 10px 0 10px 20px;
+}
+.back{
+  width: 100%;
+  height: auto;
+  background-color: #d6e4db;
+  margin: 20px 0 0 0;
+  padding: 10px;
+}
+.tool{
+  width: 100%;
+  height: 100%;
+  background-color: #d6e4db;
+  margin: 0;
+  padding: 10px;
+}
+.subtitle{
+  color: #ef6c00;
+  font-size: 18px;
+  border-left: 2px solid #67bd45;
+  border-bottom: 2px solid #67bd45;
+  padding: 4px;
+}
+#operate{
+  margin: 0;
+}
+#info{
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+[type="checkBox"]{
+  margin: 8px; !important;
+}
+th label{
+  width: 20px;
+  height: 20px;
+}
+.fileLoading{
+  display: none;
+}
+.paginationText{
+  font-size: 14px;
+  line-height: 30px;
+}
+.modal{
+  height: auto;
+}
+.ifSelected{
+  background-color: #99cc66;
+}
+.forCheckbox{
+  width: 50px;
+  height: 50px;
+  padding: 12px 0 0 12px;
+}
+.forRadio{
+  width: 50px;
+  height: 50px;
+  padding: 0 0 12px 6px;
+}
+.innerBack{
+  background-color: #fff;
+  width: auto;
+  height: auto;
+  padding: 16px; !important;
+  margin: 6px 0 0 0;
+}
+.inner{
+  border-left: 2px solid #ef6c00;
+  padding: 8px;
+  margin: 8px 0;
+}
+.innerText{
+  border-bottom: 2px solid #99cc66;
+  padding: 4px;
+  margin: 4px 0;
+}
+.innerContent{
+  /*background-color: #99cc66;*/
+  background-color: #4db6ac;
+  color: #fff;
+  padding: 4px;
+  margin: 4px 0;
+}
+.optionHead{
+  background-color: #fff;
+  position: relative;
+  padding: 16px 0 16px 16px;
+  top: 6px;
+}
+.forMore{
+  color: #fff;
+  background-color: #ef6c00;
+  position: relative;
+  padding: 16px 4px;
+  top: 6px;
+}

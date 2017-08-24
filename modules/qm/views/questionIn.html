@@ -1,0 +1,188 @@
+<style>
+    .question {
+        height: 100%;
+        background-color: #e9f7ee;
+    }
+
+    .questionBody {
+        height: auto;
+        background-color: #d6e4db;
+        margin-top: 0;
+    }
+</style>
+
+<div id="path">
+    <div class="title logo pull-left">
+        <font>录入题目</font>
+    </div>
+    <div class="component ">
+        <a class="btn btn-info right z-depth-1 deep-orange lighten-3" data-ui-sref="index.questions"
+           data-ui-sref-active="active">
+            <i class="fa fa-hand-o-left"></i></a>
+        <!--<button class="btn toolbar pull-right"><i class="fa fa-angle-left"></i></button>-->
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">题库管理</a></li>
+            <li><a class="active text">录入题目</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <div class="back">
+        <div id="tool">
+            <!--<div id="operate" class="subtitle input-field">-->
+            <!--<button class="waves-effect waves-light btn btn-info">导入固定格式的文件-->
+            <!--<i class="fa fa-file"></i></button>-->
+            <!--<br />-->
+            <!--</div>-->
+            <!--<br />-->
+            <!--这块先保留,因为数据库里面预设的是选择题,到时候题型是要增加的-->
+            <div class="input-field col s2">
+                <select class="form-control" ng-model="questionType"
+                        ng-options="type.typeName for type in types">
+                    <option value="" disabled selected>请选择题型</option>
+                </select>
+                <br/>
+            </div>
+            <div id="typeConfigs" ng-show="questionType.typeName == '选择题'">
+                <div class="input-field col s2">
+                    <!--<input type="text" class="validate" id="optionsAmount" name="optionsAmount"-->
+                    <!--ng-model="optionsAmount"/>-->
+                    <!--<label for="optionsAmount">选项数量</label>-->
+                    <select class="form-control" ng-model="optionsAmount">
+                        <option value="" disabled selected>选项数量</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                    </select>
+                </div>
+                <!--<div class="input-field col s2">-->
+                <!--<select class="form-control" ng-model="optionsType">-->
+                <!--<option value="" disabled selected>选项类型</option>-->
+                <!--<option value="0">单选题</option>-->
+                <!--<option value="1">多选题</option>-->
+                <!--&lt;!&ndash;<option value="{{subject._id}}">{{subject.subjectName}}</option>&ndash;&gt;-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--<div class="input-field col s1" ng-show="optionsType == 1">-->
+                <!--<input type="text" class="validate" id="canAmount" name="canAmount"-->
+                <!--ng-model="canAmount"/>-->
+                <!--<label for="canAmount">最多可选项</label>-->
+                <!--</div>-->
+            </div>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    </div>
+    <div class="back question" ng-show="questionType.typeName != null">
+        <!--<div class="back questionBody">-->
+        <label>题目基本信息:</label><br/>
+        <div>
+            <div class="input-field col s4">
+                <select class="form-control" ng-model="question.idSubject"
+                        ng-options="subject._id as subject.subjectName for subject in subjects">
+                    <option value="" disabled selected>所属科目</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select><br/>
+                <!--<input type="text" class="validate" id="idSubject" name="idSubject"-->
+                <!--ng-model="question.idSubject" />-->
+                <!--<label for="idSubject">所属科目</label>-->
+            </div>
+            <div class="input-field col s4">
+                <select class="form-control" ng-model="question.idChapter" ng-options="chapter._id as chapter.chapterName for chapter in chapters
+        ">
+                    <!--| filter: {idSubject: add.idSubject}-->
+                    <option value="" disabled selected>所属章节</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select><br/>
+                <!--<input type="text" class="validate" id="idChapter" name="idChapter"-->
+                <!--ng-model="question.idChapter" />-->
+                <!--<label for="idChapter">所属章节</label>-->
+            </div>
+            <div class="input-field col s4">
+                <select class="form-control" ng-model="question.idPoint" ng-options="point._id as point.pointName for point in points
+        ">
+                    <!--| filter: {idChapter : add.idChapter} && {idSubject: add.idSubject}-->
+                    <option value="" disabled selected>所属知识点</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select><br/>
+                <!--<input type="text" class="validate" id="idPoint" name="idPoint"-->
+                <!--ng-model="question.idPoint" />-->
+                <!--<label for="idPoint">所属知识点</label>-->
+            </div>
+            <div class="input-field col s4">
+                <input type="text" class="validate" id="Grade" name="Grade"
+                       ng-model="question.Grade"/>
+                <label for="Grade">所属年级</label>
+            </div>
+            <!--<div class="input-field col s6" ng-hide="true">-->
+            <!--<input type="text" class="validate" id="idType" name="idType"-->
+            <!--ng-model="question.idType"/>-->
+            <!--<label for="idType">题型</label>-->
+            <!--</div>-->
+            <div class="input-field col s4">
+                <input type="text" class="validate" id="difficulty" name="difficulty"
+                       ng-model="question.difficulty"/>
+                <label for="difficulty">困难度</label>
+            </div>
+            <div class="input-field col s4">
+                <input type="text" class="validate" id="memo" name="memo"
+                       ng-model="question.memo"/>
+                <label for="memo">备注</label>
+            </div>
+        </div>
+        <label>题目内容:</label><br/>
+        <div class="back questionBody">
+            <div class="col-sm12">
+                <label>题干:</label>
+                <textarea id="indent" style="height:200px" ng-model="question.questionContent"></textarea>
+                <!--<textarea id="questionContent" class="form-control questionText" rows="6" data-provider="markdown"-->
+                          <!--name="questionContent"-->
+                          <!--ng-model="question.questionContent"></textarea>-->
+            </div>
+            <div class="row" ng-show="optionsAmount != 0">
+                <div class="col s6" ng-show="optionsAmount >= 2">
+                    <label for="answerA">A选项:</label>
+                    <textarea id="answerA" class="form-control" rows="3" name="answerA"
+                              ng-model="question.answerA"></textarea>
+                </div>
+                <div class="col s6" ng-show="optionsAmount >= 2">
+                    <label for="answerB">B选项:</label>
+                    <textarea id="answerB" class="form-control" rows="3" name="answerB"
+                              ng-model="question.answerB"></textarea>
+                </div>
+                <div class="col s6" ng-show="optionsAmount >= 3">
+                    <label for="answerA">C选项:</label>
+                    <textarea id="answerC" class="form-control" rows="3" name="answerC"
+                              ng-model="question.answerC"></textarea>
+                </div>
+                <div class="col s6" ng-show="optionsAmount >= 4">
+                    <label for="answerA">D选项:</label>
+                    <textarea id="answerD" class="form-control" rows="3" name="answerD"
+                              ng-model="question.answerD"></textarea>
+                </div>
+                <div class="col s6">
+                    <label for="trueAnswer">正确答案:</label>
+                    <textarea id="trueAnswer" class="form-control" rows="1" name="trueAnswer"
+                              ng-model="question.trueAnswer"></textarea>
+                </div>
+            </div>
+            <div class="col-sm12">
+                <label>解析:</label>
+                <textarea id="analysis" style="height:200px" ng-model="question.analysis"></textarea>
+                <!--<textarea id="analysis" class="form-control questionText" data-provider="markdown" rows="6"-->
+                          <!--name="analysis"-->
+                          <!--ng-model="question.analysis"></textarea>-->
+            </div>
+        </div>
+        <br/>
+        <button class="waves-effect waves-light btn btn-primary" ng-click="create(question)">确定
+            <i class="fa fa-check"></i></button>
+        <button class="waves-effect waves-light btn btn-primary" ng-click="question = null">重置
+            <i class="fa fa-close"></i></button>
+        <!--<button class="btn btn-primary" >取消-->
+        <!--<i class="fa fa-close"></i></button>-->
+        <!--</div>-->
+    </div>
+</div>

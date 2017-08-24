@@ -1,0 +1,152 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>学生信息管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">学生管理</a></li>
+            <li><a class="active text">学生信息管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle form-group">
+                <button class="btn btn-primary"
+                        ng-show="true" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <button class="btn btn-primary modal-trigger" data-target="add"
+                        ng-show="true">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary"
+                        ng-show="true" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered striped hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>用户编码</th>
+                <th>用户姓名</th>
+                <th>备注</th>
+                <th>所属学校</th>
+                <th>所属班级</th>
+                <th>所属年级</th>
+                <!--<th>关联用户</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="student in students" ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <!--<span ng-show="Check(student.userCode)"></span>-->
+                    <!--<div ng-show="!Check(student.userCode)">-->
+                    <input type="checkbox" id="{{student.userCode}}" name="isSelected" value="{{student}}"
+                           ng-checked="Checked(student._id)" ng-click="Check($event, student._id)"/>
+                    <label for="{{student.userCode}}"></label>
+                    <!--</div>-->
+                </td>
+                <td>
+                    {{ student.userCode || "空" }}
+                </td>
+                <td>
+                    <a editable-text="student.userName">{{ student.userName || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="student.memo">{{ student.memo || "空" }}</a>
+                </td>
+                <td>
+                    <!--<a editable-text="student.idGroup">{{ student.idGroup.groupName || "空" }}</a>-->
+                    <a editable-select="student.idGroup"
+                       e-ng-options="group._id as group.groupName for group in groups">
+                        {{ student.idGroup.groupName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <a editable-text="student.Class">{{ student.Class || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="student.grade">{{ student.grade || "空" }}</a>
+                </td>
+                <!--<td>-->
+                <!--<a editable-text="student.idUser">{{ student.idUser || "空" }}</a>-->
+                <!--</td>-->
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建学生信息" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>新建学生信息</h4>
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="userCode" name="userCode"
+                       ng-model="add.userCode"/>
+                <label for="userCode">用户账号</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="userName" name="userName"
+                       ng-model="add.userName"/>
+                <label for="userCode">用户名称</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="userPwd" name="userPwd"
+                       ng-model="add.userPwd"/>
+                <label for="userPwd">用户密码</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="memo" name="memo"
+                       ng-model="add.memo"/>
+                <label for="memo">备注</label>
+            </div>
+            <div class="input-field col s12">
+                <select class="form-control" ng-model="add.idGroup"
+                        ng-options="group._id as group.groupName for group in groups">
+                    <option value="" disabled selected>所属学校</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <br/>
+                <!--<input type="text" class="validate" id="idGroup" name="idGroup"-->
+                <!--ng-model="add.idGroup" />-->
+                <!--<label for="idGroup">所属学校</label>-->
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="Class" name="Class"
+                       ng-model="add.Class"/>
+                <label for="Class">所属班级</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="grade" name="grade"
+                       ng-model="add.grade"/>
+                <label for="grade">所属年级</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="add = null">重置</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

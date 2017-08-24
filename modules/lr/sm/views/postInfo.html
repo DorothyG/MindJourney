@@ -1,0 +1,128 @@
+<style>
+#search{
+  /*width: 100%;*/
+  height: 56px;
+  /*background-color: #d6e4db;
+  margin: 20px 0 20px 0;
+  padding: 10px;*/
+}
+#searchContent{
+  width: 500px;
+  float: left;
+}
+#info{
+  text-align: center;
+}
+#add{
+  clear: both;
+}
+.post{
+  background-color: #e9f7ee;
+}
+.postInfo{
+  background-color: #d6e4db;
+  margin-top: 0;
+}
+.postReply{
+  background-color: #e9f7ee;
+  margin-top: 0;
+}
+.postReact{
+  padding: 4px;
+  margin: 0 0 -2px 0;
+}
+.postReplyNum, .postFavoNum, .postZanNum{
+  list-style: none;
+  display: inline;
+  padding: 0 4px 0 0;
+}
+.num{
+  width: 10px;
+  display: inline;
+}
+</style>
+<div id="path">
+  <div class="title logo pull-left">
+    <font>交流圈</font>
+  </div>
+  <div class="component ">
+    <a role="button" class="btn btn-default toolbar pull-right" data-ui-sref="commuCircle" data-ui-sref-active="active"><i class="fa fa-hand-o-left"></i></a>
+    <ol class="breadcrumb component pull-right">
+      <li><a class="active text">交流圈</a></li>
+    </ol>
+  </div>
+</div>
+<div id="main">
+  <form id="search" class="back form-horizontal">
+    <button class="btn btn-primary pull-left" id="searchBtn">筛选
+      <i class="fa fa-search"></i></button>
+    <input type="text" class="form-control" id="searchContent" />
+  </form>
+  <div class="back">
+    <div id="tool">
+      <div id="operate" class="subtitle form-group">
+        <button class="btn btn-primary">修改
+          <i class="fa fa-pencil"></i></button>
+        <button class="btn btn-primary">警告
+          <i class="fa fa-warning"></i></button>
+        <button class="btn btn-primary">封贴
+          <i class="fa fa-check"></i></button>
+        <button class="btn btn-primary">删除
+          <i class="fa fa-eraser"></i></button>
+      </div>
+    </div>
+    <div class="back post">
+      <div class="back postInfo">
+        <div class="postOwner">
+          <font class="logoLighter">我是学渣</font>
+          &nbsp;
+          <font class="logoLighter">2017-1-1 12:29</font>
+        </div>
+        <div class="postBody">
+          <font>文言文翻译不出来怎么办，在线等，挺急的......</font>
+        </div>
+        <ul class="postReact">
+          <li class="postReplyNum">
+            <i class="fa fa-comments"></i>
+            <span class="badge">2</span>
+            <span><input class="num form-control" /></span>
+          </li>
+          <li class="postFavoNum">
+            <i class="fa fa-heart"></i>
+            <span class="badge">1</span>
+            <span><input class="num form-control" /></span>
+          </li>
+          <li class="postZanNum">
+            <i class="fa fa-thumbs-up"></i>
+            <span class="badge">2</span>
+            <span><input class="num form-control" /></span>
+            <button class="btn btn-primary">确定修改</button>
+          </li>
+        </ul>
+      </div>
+      <div class="back postReply">
+        评论全选<input type="checkBox" />
+        <div class="postOwner">
+          <font class="logoLighter">我是学渣中的战斗机</font>
+          &nbsp;
+          <font class="logoLighter">2017-1-1 12:30</font>
+        </div>
+        <div class="postBody">
+          <input type="checkBox" />
+          <font>凉拌呗......不然还能怎么办</font>
+        </div>
+      </div>
+      <div class="back postReply">
+        <div class="postOwner">
+          <font class="logoLighter">我是学霸</font>
+          &nbsp;
+          <font class="logoLighter">2017-1-1 12:30</font>
+        </div>
+        <div class="postBody">
+          <input type="checkBox" />
+          <font>建议楼主找找古文观止来看看，培养培养语感，时间长了就能翻译出来了。</font>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

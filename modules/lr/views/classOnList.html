@@ -1,0 +1,104 @@
+<style>
+    .optionHead{
+        background-color: #fff;
+        padding: 10px 0;
+        margin: 0;
+    }
+</style>
+<div id="path">
+    <div class="title logo pull-left">
+        <font>作业列表</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">教学资源</a></li>
+            <li><a class="text">课堂练习管理</a></li>
+            <li><a class="active text">作业列表</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main">
+    <!--<form id="search" class="back">-->
+    <!--<button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找-->
+    <!--<i class="fa fa-search"></i></button>-->
+    <!--<input type="text" id="searchContent" ng-model="searchContent"/>-->
+    <!--</form>-->
+    <div class="back">
+        <div id="list" ng-show="answers == null">
+            <table id="info" class="bordered highlight hoverable centered">
+                <thead>
+                <tr>
+                    <th>练习编码</th>
+                    <th>练习简述</th>
+                    <th>组织编码</th>
+                    <th>提交人</th>
+                    <th>提交时间</th>
+                    <th>评分</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="paper in papers">
+                    <td>{{ paper.examCode || "空" }}</td>
+                    <td>
+                        {{ paper.examName || "空" }}
+                    </td>
+                    <td>
+                        {{ paper.idGroup.groupName || "空" }}
+                    </td>
+                    <td>
+                        {{ exam.createUser.userName || "空"}}
+                    </td>
+                    <td>
+                        {{ paper.createTime || "空" | date:"yyyy-MM-dd HH:mm" }}
+                    </td>
+                    <td>
+                        {{ paper.actualScore || "0" }}
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="correct(paper)">批改</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="loading">
+                <pac-man></pac-man>
+            </div>
+            <ul class="pagination">
+                <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+                <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a
+                        ng-click="paginating(page)">{{page}}</a>
+                </li>
+                <span class="paginationText">当前是第{{index}}页</span>
+            </ul>
+        </div>
+
+        <div id="correct" class="innerBack" ng-show="answers != null">
+            <div class="back row" ng-repeat="answer in answers.answerSheet">
+                <h5>{{answer.examName}}</h5>
+                <div class="col s1">
+                    <span class="input-field optionHead">
+                        <input type="text" id="{{answer._id}}" name="isSelected" value="{{answer.score}}" placeholder="得分"
+                               ng-model="answer.score" ng-change="forTotal()" />
+                    <label for="{{answer._id}}"></label>
+                    </span>
+                </div>
+                <div class="col s11">
+                    <div class="innerBack" >
+                        <div class="innerText">
+                            {{$index + 1}}.<span ng-bind-html="answer.idQuestion.questionContent | trustHtml"></span>
+                        </div>
+                        <div class="inner">作答.{{answer.answer}}</div>
+                        <div class="innerContent">正确答案:{{answer.idQuestion.trueAnswer}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span>得分:<span style="color: #ff0000; font-size: 40px">{{answers.actualScore}}</span>/{{answers.totalScore}}</span>
+                <button class="btn btn-info orange darken-4 pull-right" ng-click="modify(answers)">确定</button>
+                <button class="btn btn-info orange darken-4 pull-right" ng-click="answers = null;">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

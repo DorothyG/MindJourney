@@ -1,0 +1,313 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>用户管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">权限管理</a></li>
+            <li><a class="active text">用户管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class="btn btn-primary" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <button class="btn btn-primary modal-trigger" data-target="add">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary modal-trigger" data-target="roleManage" ng-disabled="$rootScope.isCheck"
+                        ng-init="$rootScope.isCheck = true">角色管理
+                    <i class="fa fa-group"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <!--<button class="btn btn-primary modal-trigger" data-target="authmanage">权限管理-->
+                <!--<i class="fa fa-send"></i></button>-->
+                <!--<button class="waves-effect waves-light btn btn-primary" ng-click="offline()">下线-->
+                <!--<i class="fa fa-times"></i></button>-->
+            </div>
+        </div>
+
+        <!--表格-->
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>用户编码</th>
+                <th>用户姓名</th>
+                <th>用户类型</th>
+                <th>备注</th>
+                <th>所属学校</th>
+                <th>所属班级</th>
+                <th>所属年级</th>
+                <th>教授科目</th>
+                <th>教授班级</th>
+                <th>关联用户</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users" ng-click="checkTr($event, this)">
+                <!--ng-init="Selected[$index] = false" ng-class="Selected[$index] == true? 'ifSelected': ''"-->
+                <!--;Selected[$index] = !Selected[$index];-->
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{user.userCode}}" name="isSelected" value="{{user}}"
+                           ng-checked="Checked(user._id)" ng-click="Check($event, user._id)"/>
+                    <label for="{{user.userCode}}"></label>
+                </td>
+                <td>{{ user.userCode || "空" }}</td>
+                <td>
+                    <a editable-text="user.userName">{{ user.userName || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="user.userType">{{ user.userType || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="user.memo">{{ user.memo || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-select="user.idGroup" e-ng-options="group._id as group.groupName for group in groups">
+                        {{ user.idGroup.groupName || "空" }}
+                    </a>
+                    <!--<a editable-text="user.idGroup">{{ user.idGroup || "空" }}</a>-->
+                    <!--<select class="form-control" ng-init="user.idGroup.groupName" ng-model="user.idGroup.groupName" ng-options="group._id as group.groupName for group in groups">-->
+                    <!--&lt;!&ndash;<option disabled selected ng-model="user.idGroup.groupName || '空'">所属学校</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option value="{{subject._id}}">{{subject.subjectName}}</option>&ndash;&gt;-->
+                    <!--</select>-->
+                </td>
+                <td>
+                    <span ng-show="user.userType != 2 && user.userType != 0"><i class="fa fa-large fa-close"></i></span>
+                    <a ng-show="user.userType == 2 || user.userType == 0" editable-text="user.Class">{{ user.Class ||
+                        "空" }}</a>
+                </td>
+                <td>
+                    <span ng-show="user.userType != 2 && user.userType != 0"><i class="fa fa-large fa-close"></i></span>
+                    <a ng-show="user.userType == 2 || user.userType == 0" editable-text="user.grade">{{ user.grade ||
+                        "空" }}</a>
+                </td>
+                <td>
+                    <!--<a editable-text="user.teachingSubject">{{ user.teachingSubject || "空" }}</a>-->
+                    <span ng-show="user.userType != 3 && user.userType != 0"><i class="fa fa-large fa-close"></i></span>
+                    <a ng-show="user.userType == 3 || user.userType == 0" editable-select="user.teachingSubject"
+                       e-ng-options="subject._id as subject.subjectName for subject in subjects">
+                        {{ user.teachingSubject.groupName || "空" }}
+                    </a>
+                    <!--<select class="form-control" ng-model="user.teachingSubject.groupName" ng-options="subject._id as subject.subjectName for subject in subjects">-->
+                    <!--<option disabled selected ng-model="user.teachingSubject.subjectName || '空'">所属科目</option>-->
+                    <!--&lt;!&ndash;<option value="{{subject._id}}">{{subject.subjectName}}</option>&ndash;&gt;-->
+                    <!--</select>-->
+                </td>
+                <td>
+                    <span ng-show="user.userType != 3 && user.userType != 0"><i class="fa fa-large fa-close"></i></span>
+                    <a ng-show="user.userType == 3 || user.userType == 0" editable-text="user.teachingClass">{{
+                        user.teachingClass || "空" }}</a>
+                </td>
+                <td>
+                    <span ng-show="user.userType != 4 && user.userType != 0"><i class="fa fa-large fa-close"></i></span>
+                    <a ng-show="user.userType == 4 || user.userType == 0" editable-text="user.idUser">{{ user.idUser.userName ||
+                        "空" }}</a>
+                </td>
+                <td>
+                    <button class="btn btn-primary modal-trigger" data-target="authmanage"
+                            ng-click="setAuth(user, $event); Check = true;">权限管理
+                        <i class="fa fa-send"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!---->
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<!--新建-->
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建用户" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>新建用户</h4>
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="userCode" name="userCode"
+                       ng-model="add.userCode"/>
+                <label for="userCode">用户账号</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="userName" name="userName"
+                       ng-model="add.userName"/>
+                <label for="userName">用户姓名</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="userPwd" name="userPwd"
+                       ng-model="add.userPwd"/>
+                <label for="userPwd">用户密码</label>
+            </div>
+            <div class="input-field col s12">
+                <select id="type" class="form-control" ng-model="add.userType">
+                    <option value="" disabled selected>用户类型</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <br/>
+                <!--<input type="text" class="validate" id="userType" name="userType"-->
+                <!--ng-model="add.userType" />-->
+                <!--<label for="userType">用户类型名称</label>-->
+            </div>
+            <div class="input-field col s12">
+                <select class="form-control" ng-model="add.idGroup"
+                        ng-options="group._id as group.groupName for group in groups">
+                    <option value="" disabled selected>所属学校</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <br/>
+                <!--<input type="text" class="validate" id="idGroup" name="idGroup"-->
+                <!--ng-model="add.idGroup" />-->
+                <!--<label for="idGroup">所属学校</label>-->
+            </div>
+            <div id="student" ng-show="add.userType == 2">
+                <div class="input-field col s12">
+                    <input type="text" class="validate" id="Class" name="Class"
+                           ng-model="add.Class"/>
+                    <label for="Class">所属班级</label>
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" class="validate" id="grade" name="grade"
+                           ng-model="add.grade"/>
+                    <label for="grade">所属年级</label>
+                </div>
+            </div>
+            <div id="teacher" ng-show="add.userType == 3">
+                <div class="input-field col s12">
+                    <select class="form-control" ng-model="add.idSubject"
+                            ng-options="subject._id as subject.subjectName for subject in subjects">
+                        <option value="" disabled selected>教授科目</option>
+                        <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                    </select>
+                    <br/>
+                    <!--<input type="text" class="validate" id="teachingSubject" name="teachingSubject"-->
+                    <!--ng-model="add.teachingSubject" />-->
+                    <!--<label for="teachingSubject">教授科目</label>-->
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" class="validate" id="teachingClass" name="teachingClass"
+                           ng-model="add.teachingClass"/>
+                    <label for="teachingClass">教授班级</label>
+                </div>
+            </div>
+            <div class="input-field col s12" ng-show="add.userType == 4">
+                <select class="form-control" ng-model="add.idUser"
+                        ng-options="user._id as user.userName for user in users">
+                    <option value="" disabled selected>关联用户</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <br/>
+                <!--<input type="text" class="validate" id="idUser" name="idUser"-->
+                <!--ng-model="add.idUser" />-->
+                <!--<label for="idUser">关联用户</label>-->
+            </div>
+            <div class="input-field col s12">
+                <textarea class="materialize-textarea" rows="2" id="memo" name="memo"
+                          ng-model="add.memo"></textarea>
+                <label for="memo">备注</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="add = null">重置</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="add = null">取消</button>
+    </div>
+</div>
+<!---->
+
+<!--权限管理-->
+<div id="authmanage" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="权限管理"
+     aria-hidden="true">
+    <div class="modal-content">
+        <h4>权限管理</h4>
+        <div class="col l12 text-center">
+            <ul id="tree" class="ztree"></ul>
+        </div>
+        <!--<table class="bordered highlight hoverable centered">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th></th>-->
+        <!--<th>权限编码</th>-->
+        <!--<th>权限名称</th>-->
+        <!--<th>权限密码</th>-->
+        <!--<th>权限类型名称</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr ng-repeat="auth in auths">-->
+        <!--<td>-->
+        <!--<input type="checkbox" id="{{auth.authCode}}" name="isSelected" value="{{auth.authCode}}"/>-->
+        <!--<label for="{{auth.authCode}}"></label>-->
+        <!--</td>-->
+        <!--<td>{{auth.authCode}}</td>-->
+        <!--<td>{{auth.authName}}</td>-->
+        <!--<td>{{auth.p_id}}</td>-->
+        <!--<td>{{auth.authType}}</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="authManage()">发送</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>
+<!---->
+
+<!--角色管理-->
+<div id="roleManage" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="角色管理"
+     aria-hidden="true">
+    <div class="modal-content">
+        <h4>角色管理</h4>
+        <table class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th></th>
+                <th>角色编码</th>
+                <th>角色名称</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="role in roles">
+                <td>
+                    <input type="radio" id="{{role.roleCode}}" name="isSelected" value="{{role}}"/>
+                    <label for="{{role.roleCode}}"></label>
+                </td>
+                <td>{{role.roleCode}}</td>
+                <td>{{role.roleName}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="roleManage()">发送</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>
+<!---->
+

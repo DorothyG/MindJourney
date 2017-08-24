@@ -1,0 +1,133 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>新建课前预习</font>
+    </div>
+    <div class="component ">
+        <button class="btn toolbar pull-right" data-ui-sref="index.classBefore" data-ui-sref-active="active"><i class="fa fa-angle-left"></i></button>
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">教学资源</a></li>
+            <li><a class="text">课前预习管理</a></li>
+            <li><a class="active text">新建课前预习</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s8">
+                <input type="text" class="validate" id="classBeforeName" name="classBeforeName"
+                       ng-model="add.keQianName"/>
+                <label for="classBeforeName">课前预习简述</label>
+            </div>
+            <div class="input-field col s4">
+                <select class="form-control" ng-model="add.idGroup"
+                        ng-options="group._id as group.groupName for group in groups">
+                    <option value="" disabled selected>所属学校</option>
+                </select>
+                <br/>
+            </div>
+            <div class="input-field col s12">
+        <textarea class="materialize-textarea" rows="2" id="memo" name="memo"
+                  ng-model="add.memo"></textarea>
+                <label for="memo">备注</label>
+            </div>
+            <div class="input-field col s12">
+                <label>选择课件:</label>
+                <button class="btn btn-info orange darken-4 pull-right" ng-click="create(add)">新建</button>
+                <button class="btn btn-info orange darken-4 pull-right" ng-click="add = null;cancel()">取消</button>
+                <br /><br />
+                <table id="info" class="bordered highlight hoverable centered">
+                    <thead>
+                    <tr>
+                        <th>
+                            <!--<input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>-->
+                            <!--<label for="cboxchecked"></label>-->
+                        </th>
+                        <th>课件编号</th>
+                        <th>课件名称</th>
+                        <th>所属科目</th>
+                        <th>所属章节</th>
+                        <th>所属知识点</th>
+                        <th>创建时间</th>
+                        <th>创建人</th>
+                        <th>所属学校</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="resource in resources" ng-click="checkTr($event, this);$parent.add.idResource = resource._id">
+                        <td class="forRadio">
+                            <input type="radio" id="{{resource.resourceCode}}" name="isSelected" value="{{resource._id}}"
+                                   ng-checked="Checked(resource._id)" ng-click="Check($event, resource._id)"/>
+                            <label for="{{resource.resourceCode}}"></label>
+                        </td>
+                        <td>
+                            {{ resource.resourceCode || "空" }}
+                        </td>
+                        <td>
+                            {{ resource.resourceName || "空" }}
+                        </td>
+                        <td>
+                            {{ resource.idSubject.subjectName || "空" }}
+                        </td>
+                        <td>
+                            {{ resource.idChapter.chapterName || "空" }}
+                        </td>
+                        <td>
+                            {{ resource.idPoint.pointName || "空" }}
+                        </td>
+                        <td>
+                            {{ resource.createTime || "空" | date:'yyyy-MM-dd hh:mm:ss'}}
+                        </td>
+                        <td>
+                            {{ resource.createUser.userName || "空" }}
+                        </td>
+                        <td>
+                            {{ resource.idGroup.groupName || "空" }}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary modal-trigger" data-target="view" ng-click="transfer(resource)">查看
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="loading">
+                    <pac-man></pac-man>
+                </div>
+                <ul class="pagination">
+                    <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+                    </li>
+                    <span class="paginationText">当前是第{{index}}页</span>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看课件" aria-hidden="true">
+    <div class="modal-content">
+        <h4>查看课件</h4>
+        <div class="input-field col s12">
+            <label>课件正文</label><br/><br/>
+            {{view.resourceContent || '空'}}
+        </div>
+        <div class="input-field col s12">
+            <a ng-show="view.resourceFile != null" ng-repeat="files in view.resourceFile"
+               href="http://120.77.253.155/{{files.idFile.filePath}}">{{files.idFile.fileName}}</a>
+            <span ng-show="view.resourceFile == null">暂无附件</span>
+        </div>
+        <div class="input-field col s12">
+            <label>备注</label><br/><br/>
+            {{view.memo || '空'}}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

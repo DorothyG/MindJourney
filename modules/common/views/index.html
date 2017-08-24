@@ -1,0 +1,44 @@
+<div id="index" class="container-fluid">
+    <div id="content" class="row">
+        <!-- 左侧导航栏 -->
+        <div ng-include="'modules/common/views/navLeft.html'" ng-controller="navLeftCtrl"
+             id="navLeft" class="col l2 m1 s1"></div>
+        <!-- 主内容 -->
+        <div ui-view="" id="platform" class="col l10 m11 s11"></div>
+    </div>
+    <!-- 顶部导航栏 -->
+    <div ng-include="'modules/common/views/navTop.html'" ng-controller="navTopCtrl"
+         id="navTop" class="row"></div>
+</div>
+
+<!--侧边导航-->
+<div ng-include="'modules/common/views/sideNav.html'" ng-controller="sideNavCtrl" id="navSide" ></div>
+<style>
+    .page-footer{
+        display: none;
+    }
+</style>
+<footer z-index="1" class="page-footer">
+    <!--<div class="container">-->
+    <!--<div class="row">-->
+    <!--<div class="col l6 s12">-->
+    <!--<h5 class="white-text">Footer Content</h5>-->
+    <!--<p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>-->
+    <!--</div>-->
+    <!--<div class="col l4 offset-l2 s12">-->
+    <!--<h5 class="white-text">Links</h5>-->
+    <!--<ul>-->
+    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>-->
+    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>-->
+    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>-->
+    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Copyright MJ team
+        </div>
+    </div>
+</footer>

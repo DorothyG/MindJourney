@@ -1,0 +1,204 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>公告管理</font>
+    </div>
+    <div class="component ">
+        <a class="btn btn-info right z-depth-1 deep-orange lighten-3" data-ui-sref="index.home"
+           data-ui-sref-active="active">
+            <i class="fa fa-hand-o-left"></i></a>
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">首页</a></li>
+            <li><a class="active text">公告管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class="btn btn-primary" ng-click="modify();Show = true">修改
+                    <i class="fa fa-pencil"></i></button>
+                <button class="btn btn-primary modal-trigger" data-target="add">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary" ng-click="publish()">发布
+                    <i class="fa fa-send"></i></button>
+                <button class=" btn btn-primary" ng-click="offline()">下线
+                    <i class="fa fa-times"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>公告编号</th>
+                <th>公告标题</th>
+                <th>公告作者</th>
+                <th>公告简介</th>
+                <!--<th>公告正文</th>-->
+                <!--<th>附件</th>-->
+                <th>备注</th>
+                <th>公告时间</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="an in announce" ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{an._id}}" name="isSelected" value="{{an}}"
+                           ng-checked="Checked(an._id)" ng-click="Check($event, an._id)"/>
+                    <label for="{{an._id}}"></label>
+                </td>
+                <td>{{ an.announcementCode || "空" }}</td>
+                <td>
+                    <a editable-text="an.announcementName">{{ an.announcementName || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="an.announcementAuthor">{{ an.createUser.userName || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="an.announcementSummary">{{ an.announcementSummary || "空" }}</a>
+                </td>
+                <!--<td>-->
+                <!--<a editable-text="an.announcementContent">{{ an.announcementContent || "空" }}</a>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<a ng-show="an.idFiles != null" href="http://120.77.253.155/{{an.idFiles[0].idFile.filePath || ''}}">附件下载</a>-->
+                <!--<span ng-show="an.idFiles == null">暂无附件</span>-->
+                <!--</td>-->
+                <td>
+                    <a editable-text="an.memo">{{ an.memo || "空" }}</a>
+                </td>
+                <td>
+                    {{ an.announcementTime || "空" | date:"yyyy-MM-dd HH:mm:ss"}}
+                </td>
+                <td>
+                    <button class="btn btn-primary modal-trigger" data-target="view" ng-click="transfer(an)">查看</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<!---->
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建公告" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>新建公告</h4>
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="anName" name="anName"
+                       ng-model="add.announcementName"/>
+                <label for="anName">公告标题</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="anSummary" name="anSummary"
+                       ng-model="add.announcementSummary"/>
+                <label for="anSummary">公告简介</label>
+            </div>
+            <div class="input-field col s12">
+                <textarea id="indent" style="height:200px" id="anContent" name="anContent"
+                          ng-model="add.announcementContent"></textarea>
+            </div>
+            <!--<div class="col-sm-12">-->
+            <!--<textarea class="form-control" data-provider="markdown" rows="10" id="anContent" name="anContent"-->
+            <!--ng-model="add.announcementContent"></textarea>-->
+            <!--</div>-->
+            <div class="input-field col s12">
+                <div class="file-field input-field">
+                    <div class="btn btn-primary">
+                        <span>附件</span>
+                        <input type="file" multiple id="fileInput" name="anFiles" file-model="add.idFiles" />
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text"/>
+                    </div>
+                </div>
+            </div>
+            <div class="fileLoading">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+                <p>文件上传中,进度:{{progress}}%</p>
+            </div>
+            <div class="input-field col s12">
+                <textarea class="materialize-textarea" rows="2" id="anMemo" name="anMemo"
+                          ng-model="add.memo"></textarea>
+                <label for="anMemo">备注</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action waves-effect waves-green btn-flat" ng-disabled="add == null" ng-click="create(add)">新建</button>
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="add = null;Reset()">重置</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="add = null;Reset()">取消</button>
+    </div>
+</div>
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看公告" aria-hidden="true">
+    <div class="modal-content">
+        <h4>查看公告</h4>
+        <div class="input-field col s12" ng-init="Show = true">
+            <div id="content"
+                 ng-show="Show" ng-bind-html="view.announcementContent || '空' | trustHtml" ng-click="Show = false"></div>
+            <label for="content">公告正文</label>
+        </div>
+        <div class="input-field col s12" ng-show="!Show">
+            <textarea z-index="-1" id="indentEdit" style="height:200px" id="announcementContent"
+                      name="announcementContent"></textarea>
+        </div>
+        <div class="input-field col s12">
+            <a role="button" class="btn btn-info"
+               ng-show="view.idFiles != null" ng-repeat="files in view.idFiles"
+               href="http://120.77.253.155/{{files.idFile.filePath}}">附件{{$index + 1}}下载</a>
+            <span ng-show="view.idFiles == null">暂无附件</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="ok(view);Show = true">确定修改</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>
+<!--<div id="publish" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="发送公告" aria-hidden="true">-->
+<!--<div class="modal-content">-->
+<!--<h4>发布公告</h4>-->
+<!--<form id="formPublish" class="row" role="form">-->
+<!--<div class="input-field col s12">-->
+<!--<select multiple id="announceRole">-->
+<!--<option value="" disabled selected>面向</option>-->
+<!--<option value="2">学生</option>-->
+<!--<option value="3">教师</option>-->
+<!--<option value="4">家长</option>-->
+<!--</select>-->
+<!--</div>-->
+<!--&lt;!&ndash;<div class="input-field col s12">&ndash;&gt;-->
+<!--&lt;!&ndash;<input type="text" class="validate" id="anTime" name="anTime" readonly&ndash;&gt;-->
+<!--&lt;!&ndash;ng-model="pub.announcementTime" />&ndash;&gt;-->
+<!--&lt;!&ndash;<label for="anName">时间</label>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</form>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button class="modal-action waves-effect waves-green btn-flat" ng-click="publish()">发送</button>-->
+<!--<button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>-->
+<!--</div>-->
+<!--</div>-->

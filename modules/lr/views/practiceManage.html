@@ -1,0 +1,88 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>练习管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">教学资源</a></li>
+            <li><a class="active text">练习管理</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class="btn btn-primary" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <!--<button class="btn btn-primary modal-trigger" data-target="add">增加-->
+                <!--<i class="fa fa-gavel"></i></button>-->
+                <button class="btn btn-primary" data-ui-sref="index.practiceCreate" data-ui-sref-active="active">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>练习编码</th>
+                <th>练习名称</th>
+                <th>练习类型</th>
+                <th>组织编码</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="practice in practices " ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{practice._id}}" name="isSelected" value="{{practice}}"
+                           ng-checked="Checked(practice._id)" ng-click="Check($event, practice._id)"/>
+                    <label for="{{practice._id}}"></label>
+                </td>
+                <td>{{ practice.practiceCode || "空" }}</td>
+                <td>
+                    <a editable-text="practice.practiceName">{{ practice.practiceName || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="practice.practiceType">{{ practice.practiceType || "空" }}</a>
+                </td>
+                <td>
+                    <!--<a editable-text="classBefore.idGroup.groupName">{{ classBefore.idGroup.groupName || "空" }}</a>-->
+                    <a editable-select="practice.idGroup" e-ng-options="group.groupName for group in groups">
+                        {{ practice.idGroup.groupName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <a editable-text="practice.memo">{{ practice.memo || "空" }}</a>
+                </td>
+                <td>
+                    <button class="btn btn-primary modal-trigger" ng-click="transfer(practice)">查看习题</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>

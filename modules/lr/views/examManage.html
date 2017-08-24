@@ -1,0 +1,97 @@
+<style>
+  select{
+    display: inline-block; !important;
+  }
+</style>
+<div id="path">
+  <div class="title logo pull-left">
+    <font>考试管理</font>
+  </div>
+  <div class="component ">
+    <ol class="breadcrumb component pull-right">
+      <li><a class="text">教学资源</a></li>
+      <li><a class="active text">考试管理</a></li>
+    </ol>
+  </div>
+</div>
+<div id="main">
+  <form id="search" class="back">
+    <button class="btn btn-primary" id="searchBtn" ng-click="search()">查找
+      <i class="fa fa-search"></i></button>
+    <input type="text" id="searchContent" ng-model="searchContent"/>
+  </form>
+  <div class="back">
+    <div id="tool">
+      <div id="operate" class="subtitle form-group">
+        <button class="btn btn-primary" ng-click="modify()">修改
+          <i class="fa fa-pencil"></i></button>
+        <!--<button class="btn btn-primary" data-toggle="modal" data-target="#add">增加-->
+          <!--<i class="fa fa-gavel"></i></button>-->
+        <button class="btn btn-primary" data-ui-sref="index.examCreate" data-ui-sref-active="active" >增加
+          <i class="fa fa-gavel"></i></button>
+        <button class="btn btn-primary" ng-click="delete()">删除
+          <i class="fa fa-eraser"></i></button>
+        <button class="btn btn-primary right" ng-click="refresh()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <table id="info" class="bordered highlight hoverable centered">
+      <thead>
+      <tr>
+        <th class="forCheckbox">
+          <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+          <label for="cboxchecked"></label>
+        </th>
+        <th>考试编码</th>
+        <th>考试简述</th>
+        <th>组织编码</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>备注</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="exam in exams" ng-click="checkTr($event, this)">
+        <td class="forCheckbox">
+          <input type="checkbox" id="{{exam._id}}" name="isSelected" value="{{exam}}"
+                 ng-checked="Checked(exam._id)" ng-click="Check($event, exam._id)"/>
+          <label for="{{exam._id}}"></label>
+        </td>
+        <td>{{ exam.examCode || "空" }}</td>
+        <td>
+          <a editable-text="exam.examName">{{ exam.examName || "空" }}</a>
+        </td>
+        <td>
+          <!--<a editable-text="classAfter.idGroup">{{ classAfter.idGroup.groupName || "空" }}</a>-->
+          <a editable-select="exam.idGroup" e-ng-options="group.groupName for group in groups">
+            {{ exam.idGroup.groupName || "空" }}
+          </a>
+        </td>
+        <td>
+          <a editable-combodate="exam.startTime" >{{ exam.startTime || "空" | date:"yyyy-MM-dd HH:mm" }}</a>
+        </td>
+        <td>
+          <a editable-combodate="exam.endTime" >{{ exam.endTime || "空" | date:"yyyy-MM-dd HH:mm" }}</a>
+        </td>
+        <td>
+          <a editable-text="exam.memo">{{ exam.memo || "空" }}</a>
+        </td>
+        <td>
+          <button class="btn btn-primary" ng-click="transfer(exam)" >查看内容</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="loading">
+      <pac-man></pac-man>
+    </div>
+    <ul class="pagination">
+      <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+      <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+      </li>
+      <span class="paginationText">当前是第{{index}}页</span>
+    </ul>
+  </div>
+</div>

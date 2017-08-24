@@ -1,0 +1,119 @@
+<style>
+    .post {
+        background-color: #e9f7ee;
+    }
+
+    .postInfo {
+        background-color: #d6e4db;
+        margin-top: 0;
+    }
+
+    .postReply {
+        background-color: #e9f7ee;
+        margin-top: 0;
+    }
+
+    .postReact {
+        padding: 4px;
+        margin: 0 0 -2px 0;
+    }
+
+    .postReplyNum, .postFavoNum, .postZanNum {
+        list-style: none;
+        display: inline;
+        padding: 0 4px 0 0;
+    }
+
+    .num {
+        width: 10px;
+        display: inline;
+    }
+
+    .postImg {
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+        margin: 4px 4px 4px 0;
+    }
+
+    .logoTitle {
+        font-size: 20px;
+    }
+</style>
+<div id="path">
+    <div class="title logo pull-left">
+        <font>交流圈</font>
+    </div>
+    <div class="component ">
+        <a role="button" class="btn btn-default toolbar pull-right deep-orange lighten-3"
+           data-ui-sref="index.postManage" data-ui-sref-active="active"><i class="fa fa-hand-o-left"></i></a>
+        <ol class="breadcrumb component pull-right">
+            <li><a class="active text">交流圈</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main">
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class=" btn btn-primary"
+                        ng-click="modify(Card)">修改
+                    <i class="fa fa-pencil"></i></button>
+                <!--<button class="btn btn-primary">投诉-->
+                    <!--<i class="fa fa-pencil"></i></button>-->
+                <!--<button class="btn btn-primary"-->
+                        <!--ng-click="delete()">删除-->
+                    <!--<i class="fa fa-eraser"></i></button>-->
+            </div>
+        </div>
+        <div class="back post">
+            <div class="back postInfo">
+                <div class="postOwner">
+                    <font class="logoLighter">{{Card.createUser.userName}}</font>
+                    &nbsp;
+                    <font class="logoLighter">{{Card.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</font>
+                </div>
+                <div class="postBody" ng-init="Show = true">
+                    <font class="logoTitle">
+                        <a editable-textarea="Card.cardName" id="cardName">{{ Card.cardName || "空" }}</a></font><br/>
+                    <div ng-show="Show" ng-bind-html="Card.cardContent | trustHtml" ng-click="Show = false"></div>
+                    <div class="input-field col s12" ng-show="!Show">
+                        <textarea z-index="-1" id="indent" style="height:200px" id="cardContent" name="cardContent"
+                          ng-model="cardContent"></textarea>
+                    </div>
+                    <!--<a editable-textarea="Card.cardContent" id="cardContent">{{ Card.cardContent || "空" }}</a><br />-->
+                    <div class="postImg" ng-repeat="img in Card.cardPictures">
+                        <img class="postImg" ng-src="http://localhost:80{{img.picture}}"/>
+                    </div>
+                </div>
+                <!--<ul class="postReact">-->
+                <!--<li class="postReplyNum">-->
+                <!--<i class="fa fa-comments"></i>-->
+                <!--<span class="badge">2</span>-->
+                <!--</li>-->
+                <!--<li class="postFavoNum">-->
+                <!--<i class="fa fa-heart"></i>-->
+                <!--<span class="badge">1</span>-->
+                <!--</li>-->
+                <!--<li class="postZanNum">-->
+                <!--<i class="fa fa-thumbs-up"></i>-->
+                <!--<span class="badge">2</span>-->
+                <!--</li>-->
+                <!--</ul>-->
+            </div>
+            <div class="back postReply" ng-repeat="reply in replies">
+                <div class="postOwner">
+                    <font class="logoLighter">{{reply.replyUser.userName}}回复
+                        {{reply.beReplyUser.userName}}
+                    </font>
+                    &nbsp;
+                    <font class="logoLighter">{{reply.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</font>
+                </div>
+                <div class="postBody">
+                    <font>{{reply.cardContent || "空"}}</font>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

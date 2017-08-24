@@ -1,0 +1,99 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>投诉管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">交流圈</a></li>
+            <li><a class="active text">投诉管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <!--<div id="tool">-->
+            <!--<div id="operate" class="subtitle input-field">-->
+                <!--&lt;!&ndash;<button class="btn btn-primary"&ndash;&gt;-->
+                        <!--&lt;!&ndash;ng-show="true" ng-click="modify()">修改&ndash;&gt;-->
+                    <!--&lt;!&ndash;<i class="fa fa-pencil"></i></button>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button class="btn btn-primary modal-trigger" data-target="add"&ndash;&gt;-->
+                        <!--&lt;!&ndash;ng-show="true">增加&ndash;&gt;-->
+                    <!--&lt;!&ndash;<i class="fa fa-gavel"></i></button>&ndash;&gt;-->
+                <!--<button class="btn btn-primary"-->
+                        <!--ng-show="true" ng-click="delete()">删除-->
+                    <!--<i class="fa fa-eraser"></i></button>-->
+                <!--<button class="btn btn-primary right" ng-click="refresh()">-->
+                    <!--<i class="fa fa-refresh"></i>-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>举报主贴</th>
+                <th>举报人</th>
+                <th>举报理由</th>
+                <th>举报时间</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="complaint in complaints" ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{complaint._id}}" name="isSelected" value="{{card}}"
+                           ng-checked="Checked(complaint._id)" ng-click="Check($event, card._id)"/>
+                    <label for="{{complaint._id}}"></label>
+                </td>
+                <td>
+                    {{ complaint.idCard.cardTitle || "空" }}
+                </td>
+                <td>
+                    {{complaint.complaintUser || "空"}}
+                </td>
+                <td>
+                    {{complaint.complaintContent || "空"}}
+                </td>
+                <th>
+                    <a class="waves-effect waves-light btn btn-info" data-target="deal"
+                       ng-click="handle(complaint)">处理</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<div id="deal" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="处理举报" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>处理举报</h4>
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s12">
+                <textarea class="validate" id="complaintReplys" name="complaintReplys"
+                          ng-model="complaintReplys"></textarea>
+                <label for="complaintReplys">处理意见</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="send(complaintReplys)">发送</button>
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="complaintReplys = null">重置</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

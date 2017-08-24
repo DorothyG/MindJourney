@@ -1,0 +1,35 @@
+<style>
+    .fix{
+        position: fixed;
+        right: 20px;
+    }
+</style>
+<ul id="slide-out" class="side-nav">
+    <li><div class="userView">
+        <div class="background">
+            <img src="components/common/images/avator.jpg">
+        </div>
+        <a><img class="circle" src="components/common/images/avator.jpg"></a>
+        <a><span class="white-text name" ng-bind="userName">John Doe</span></a>
+        <br />
+    </div></li>
+    <li><a ng-click="logout()">
+        <i class="fa fa-cut"></i>退出</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">
+        <i class="fa fa-magic"></i>设置</a></li>
+    <!--<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>-->
+</ul>
+<button class="btn-floating fix button-collapse" data-activates="slide-out">
+    <img src="components/common/images/avator.jpg" class="circle responsive-img ">
+</button>
+<!--这边放在指令或者控制器里面初始化均不起效,所以暂且放这,稍后有时间研究原因和解决办法-->
+<script>
+    $(function () {
+        //侧边导航初始化
+        $(".button-collapse").sideNav({
+            edge: "right",
+            closeOnClick: true
+        });
+    })
+</script>

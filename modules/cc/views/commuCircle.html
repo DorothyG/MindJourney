@@ -1,0 +1,102 @@
+<div id="path">
+  <div class="title logo pull-left">
+    <font>交流圈</font>
+  </div>
+  <div class="component ">
+    <ol class="breadcrumb component pull-right">
+      <li><a class="active text">交流圈</a></li>
+    </ol>
+  </div>
+</div>
+<div id="main">
+  <form id="search" class="back">
+    <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+      <i class="fa fa-search"></i></button>
+    <input type="text" id="searchContent" ng-model="searchContent"/>
+  </form>
+  <div class="back">
+    <div id="tool">
+      <div id="operate" class="subtitle input-field">
+        <button class="waves-effect waves-light btn btn-primary" ng-click="modify()">修改
+          <i class="fa fa-pencil"></i></button>
+        <button class="waves-effect waves-light btn btn-primary modal-trigger" data-target="add">增加
+          <i class="fa fa-gavel"></i></button>
+        <button class="waves-effect waves-light btn btn-primary" ng-click="delete()">删除
+          <i class="fa fa-eraser"></i></button>
+      </div>
+    </div>
+    <table id="info" class="bordered highlight hoverable centered">
+      <thead>
+      <tr>
+        <th>
+          <!--<input type="checkbox" id="allSelected" name="allSelected" value="-1"/>-->
+          <!--<label for="allSelected"></label>-->
+        </th>
+        <th>帖子标题</th>
+        <th>所属学校</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="card in cards">
+        <td>
+          <input type="checkbox" id="{{card._id}}" name="isSelected" value="{{card}}"/>
+          <label for="{{card._id}}"></label>
+        </td>
+        <td>
+          <a editable-text="card.cardName">{{ card.cardName || "空" }}</a>
+        </td>
+        <td>
+          <a editable-text="card.idGroup">{{ card.idGroup || "空" }}</a>
+        </td>
+        <th>
+          <a class="waves-effect waves-light btn btn-info" data-ui-sref="postInfo" data-ui-sref-active="active" ng-click="transfer(card)">查看</a>
+        </th>
+      </tr>
+      </tbody>
+    </table>
+    <div class="loading">
+      <pac-man></pac-man>
+    </div>
+  </div>
+</div>
+<!---->
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建帖子" aria-hidden="true">
+  <div class="modal-content row">
+    <h4>新建帖子</h4>
+    <form id="formAdd" class="row" role="form">
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="cardName" name="cardName"
+               ng-model="add.cardName" />
+        <label for="cardName">公告标题</label>
+      </div>
+      <div class="input-field col s12">
+        <div class="col-sm-12">
+          <textarea class="form-control" data-provider="markdown" rows="10" id="cardContent" name="cardContent"
+                    ng-model="add.cardContent"></textarea>
+          <label for="cardContent">公告正文</label>
+        </div>
+      </div>
+      <div class="input-field col s12">
+        <div class="file-field input-field">
+          <div class="btn btn-primary">
+            <span>公告图片</span>
+            <input type="file" id="fileInput" name="anFiles" file-model="add.idFiles" />
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" />
+          </div>
+        </div>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="idGroup" name="idGroup"
+               ng-model="add.idGroup" />
+        <label for="idGroup">公告标题</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+  </div>
+</div>

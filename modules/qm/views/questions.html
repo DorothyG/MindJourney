@@ -1,0 +1,164 @@
+
+<div id="path">
+    <div class="title logo pull-left">
+        <font>题目管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="active text">题目管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class=" btn btn-primary" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <a class="btn btn-primary modal-trigger"
+                   data-ui-sref="index.questionIn" data-ui-sref-active="active">增加
+                    <i class="fa fa-gavel"></i></a>
+                <button class="btn btn-primary" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>所属科目</th>
+                <th>所属章节</th>
+                <th>所属知识点</th>
+                <th>所属年级</th>
+                <th>题型</th>
+                <th>困难度</th>
+                <th>备注</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="question in questions" ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{question._id}}" name="isSelected" value="{{question}}"
+                           ng-checked="Checked(question._id)" ng-click="Check($event, question._id)"/>
+                    <label for="{{question._id}}"></label>
+                </td>
+                <td>
+                    <!--<a editable-text="question.idSubject">{{ question.idSubject.subjectName || "空" }}</a>-->
+                    <a editable-select="question.idSubject"
+                       e-ng-options="subject.subjectName for subject in subjects">
+                        {{ question.idSubject.subjectName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <!--<a editable-text="question.idChapter">{{ question.idChapter.chapterName || "空" }}</a>-->
+                    <a editable-select="question.idChapter"
+                       e-ng-options="chapter.chapterName for chapter in chapters">
+                        {{ question.idChapter.chapterName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <!--<a editable-text="question.idPoint">{{ question.idPoint.pointName || "空" }}</a>-->
+                    <a editable-select="question.idPoint"
+                       e-ng-options="point.pointName for point in points">
+                        {{ question.idPoint.pointName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <a editable-text="question.Grade">{{ question.Grade || "空" }}</a>
+                </td>
+                <td>
+                    <!--<a editable-text="question.idType">{{ question.idType.typeName || "空" }}</a>-->
+                    <a editable-select="question.idType"
+                       e-ng-options="type.typeName for type in types">
+                        {{ question.idType.typeName || "空" }}
+                    </a>
+                    <!--{{ question.idType || "空" }}-->
+                </td>
+                <td>
+                    <a editable-text="question.difficulty">{{ question.difficulty || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="question.memo">{{ question.memo || "空" }}</a>
+                </td>
+                <td>
+                    <a class="waves-effect waves-light btn btn-primary" data-target="view" ng-click="View(question)" >查看</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看题目" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>查看题目</h4>
+        <!--<form editable-form id="formView" name="formView" class="row" role="form">-->
+            <div class="input-field col s12">
+                <label for="typeName">问题正文</label><br /><br />
+                <a editable-textarea="view.questionContent" id="typeName">{{ view.questionContent || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                       <!--ng-model="view.questionContent" />-->
+            </div>
+            <div class="input-field col s12">
+                <label for="answerA">A选项</label><br /><br />
+                <a editable-textarea="view.answerA" id="answerA">{{ view.answerA || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                <!--ng-model="view.questionContent" />-->
+            </div>
+            <div class="input-field col s12">
+                <label for="answerB">B选项</label><br /><br />
+                <a editable-textarea="view.answerB" id="answerB">{{ view.answerB || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                <!--ng-model="view.questionContent" />-->
+            </div>
+            <div class="input-field col s12">
+                <label for="answerC">C选项</label><br /><br />
+                <a editable-textarea="view.answerC" id="answerC">{{ view.answerC || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                <!--ng-model="view.questionContent" />-->
+            </div>
+            <div class="input-field col s12">
+                <label for="answerD">D选项</label><br /><br />
+                <a editable-textarea="view.answerD" id="answerD">{{ view.answerD || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                <!--ng-model="view.questionContent" />-->
+            </div>
+            <div class="input-field col s12">
+                <label for="trueAnswer">正确答案</label><br /><br />
+                <a editable-textarea="view.trueAnswer" id="trueAnswer">{{ view.trueAnswer || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                <!--ng-model="view.questionContent" />-->
+            </div>
+            <div class="input-field col s12">
+                <label for="analysis">解析</label><br /><br />
+                <a editable-textarea="view.analysis" id="analysis">{{ view.analysis || "空" }}</a>
+                <!--<input type="text" class="validate" id="typeName" name="typeName"-->
+                <!--ng-model="view.questionContent" />-->
+            </div>
+        <!--</form>-->
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="modifyQuestion(view)">修改</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

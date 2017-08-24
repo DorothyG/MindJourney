@@ -1,0 +1,233 @@
+<style>
+    #accordion {
+        height: 92%;
+        overflow: auto;
+    }
+</style>
+<div class="navLeftBack">
+    <ul id="accordion" class="navLeft nav nav-stacked">
+        <!-- 首页 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button" data-ui-sref="index.home"
+               data-ui-sref-active="active" nav-left-show-change href="javascript:;">
+                <i class="fa fa-home"></i>
+                <span class="navFirst">首页</span></a>
+            <!--<i class="fa fa-angle-double-right pull-right"></i>-->
+            <!--<ul id="home" class="nav navLeft nav-stacked collapse accordion-body">-->
+            <!--<li class="itemLeft">-->
+            <!--<a class="second" data-ui-sref="announce" data-ui-sref-active="active">-->
+            <!--<i class="fa fa-large fa-genderless"></i>-->
+            <!--<span class="navSecond">公告管理</span></a>-->
+            <!--</li>-->
+            <!--</ul>-->
+        </li>
+        <li class="itemTitle">角色</li>
+        <!-- 学生管理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#studentManage')"
+               data-toggle="collapse" data-target="#studentManage" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-puzzle-piece"></i>
+                <span class="navFirst">学生管理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="studentManage" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.studentInfo" data-ui-sref-active="active"><i
+                            class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">学生信息管理</span> </a>
+                </li>
+                <li class="itemLeft">
+                    <a class="second"><i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">成长记录分析</span> </a>
+                </li>
+            </ul>
+        </li>
+        <!-- 教师管理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#teacherManage')"
+               data-toggle="collapse" data-target="#teacherManage" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-clock-o"></i>
+                <span class="navFirst">教师管理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="teacherManage" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.teacherInfo" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">教师信息管理</span> </a>
+                </li>
+            </ul>
+        </li>
+        <!-- 家长管理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#parentsManage')"
+               data-toggle="collapse" data-target="#parentsManage" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-book"></i>
+                <span class="navFirst">家长管理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="parentsManage" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.parentsInfo" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">家长信息管理</span> </a>
+                </li>
+            </ul>
+        </li>
+        <li class="itemTitle">资源</li>
+        <!-- 教学资源 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button" onclick="Materialize.showStaggeredList('#lessonSrc')"
+               data-toggle="collapse" data-target="#lessonSrc" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-archive"></i>
+                <span class="navFirst">教学资源
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="lessonSrc" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" class="accordion-toggle waves-effect" type="button"
+                       onclick="Materialize.showStaggeredList('#subjectManage')"
+                       data-toggle="collapse" data-target="#subjectManage" data-parent="#lessonSrc" nav-left-show-change
+                       href="javascript:;">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">科目管理
+        <i class="fa fa-angle-right pull-right"></i></span></a>
+                    <ul id="subjectManage" class="nav navLeft nav-stacked collapse accordion-body">
+                        <li class="itemLeft">
+                            <a class="thrid" data-ui-sref="index.subjectDefi" data-ui-sref-active="active">
+                                <span class="navThird">科目定义</span> </a>
+                            <a class="thrid" data-ui-sref="index.chapterDefi" data-ui-sref-active="active">
+                                <span class="navThird">章节定义</span> </a>
+                            <a class="thrid" data-ui-sref="index.pointDefi" data-ui-sref-active="active">
+                                <span class="navThird">知识点定义</span> </a>
+                        </li>
+                    </ul>
+                    <a class="second" data-ui-sref="index.resourceManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">课件资源管理</span> </a>
+                    <a class="second" data-ui-sref="index.practiceManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">练习管理</span> </a>
+                    <a class="second" data-ui-sref="index.classBefore" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">课前预习管理</span> </a>
+                    <a class="second" data-ui-sref="index.classOn" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">课堂练习管理</span> </a>
+                    <a class="second" data-ui-sref="index.classAfter" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">课后作业管理</span> </a>
+                </li>
+            </ul>
+        </li>
+        <!-- 考试管理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#examManage')"
+               data-toggle="collapse" data-target="#examManage" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-clone"></i>
+                <span class="navFirst">考试管理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="examManage" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.examManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">考试管理</span> </a>
+                    <a class="second" data-ui-sref="index.paperManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">批改试卷</span> </a>
+                </li>
+            </ul>
+        </li>
+        <!-- 题库管理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#questionsManage')"
+               data-toggle="collapse" data-target="#questionsManage" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-dashboard"></i>
+                <span class="navFirst">题库管理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="questionsManage" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.questionTypes" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">题型列表</span> </a>
+                    <a class="second" data-ui-sref="index.questions" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">题目管理</span> </a>
+                    <a class="second" data-ui-sref="index.questionFavo" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">题目收藏</span> </a>
+                </li>
+            </ul>
+        </li>
+        <li class="itemTitle">数据</li>
+        <!-- 数据处理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#commuCircle')"
+               data-toggle="collapse" data-target="#dataHandle" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-cloud"></i>
+                <span class="navFirst">数据处理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="dataHandle" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.dataHandle" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">自定义处理</span> </a>
+                </li>
+            </ul>
+        </li>
+        <li class="itemTitle">其他</li>
+        <!-- 交流圈 -->
+        <li class="itemLeft">
+            <!--<a class="waves-effect" data-ui-sref="index.commuCircle" data-ui-sref-active="active" nav-left-show-change href="javascript:;" ><i class="fa fa-comments"></i>-->
+            <!--<span class="navFirst">交流圈</span> </a>-->
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#commuCircle')"
+               data-toggle="collapse" data-target="#commuCircle" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-comments"></i>
+                <span class="navFirst">交流圈
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="commuCircle" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.postManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">帖子管理</span> </a>
+                    <a class="second" data-ui-sref="index.complaintManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">投诉管理</span> </a>
+                </li>
+            </ul>
+        </li>
+        <!--学校管理-->
+        <li class="itemLeft">
+            <a class="waves-effect" data-ui-sref="index.schoolManage" data-ui-sref-active="active" nav-left-show-change
+               href="javascript:;"><i class="fa fa-building"></i>
+                <span class="navFirst">学校管理</span> </a>
+        </li>
+        <!-- 权限管理 -->
+        <li class="itemLeft">
+            <a class="accordion-toggle waves-effect" type="button"
+               onclick="Materialize.showStaggeredList('#authManage')"
+               data-toggle="collapse" data-target="#authManage" data-parent="#accordion" nav-left-show-change
+               href="javascript:;"><i class="fa fa-cubes"></i>
+                <span class="navFirst">权限管理
+    <i class="fa fa-angle-double-right pull-right"></i></span></a>
+            <ul id="authManage" class="nav navLeft nav-stacked collapse accordion-body">
+                <li class="itemLeft">
+                    <a class="second" data-ui-sref="index.userManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">用户管理</span> </a>
+                    <a class="second" data-ui-sref="index.roleManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">角色管理</span> </a>
+                    <a class="second" data-ui-sref="index.functionManage" data-ui-sref-active="active">
+                        <i class="fa fa-large fa-genderless"></i>
+                        <span class="navSecond">功能管理</span> </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+

@@ -1,0 +1,96 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>新建课堂练习</font>
+    </div>
+    <div class="component ">
+        <button class="btn toolbar pull-right" data-ui-sref="index.classOn" data-ui-sref-active="active"><i class="fa fa-angle-left"></i></button>
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">教学资源</a></li>
+            <li><a class="text">课堂练习管理</a></li>
+            <li><a class="active text">新建课堂练习</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s8">
+                <input type="text" class="validate" id="classOnName" name="classOnName"
+                       ng-model="add.keZhongName"/>
+                <label for="classOnName">课堂练习简述</label>
+            </div>
+            <div class="input-field col s4">
+                <select class="form-control" ng-model="add.idGroup"
+                        ng-options="group._id as group.groupName for group in groups">
+                    <option value="" disabled selected>所属学校</option>
+                </select>
+                <br/>
+            </div>
+            <div class="input-field col s12">
+        <textarea class="materialize-textarea" rows="2" id="memo" name="memo"
+                  ng-model="add.memo"></textarea>
+                <label for="memo">备注</label>
+            </div>
+            <div class="input-field col s12">
+                <label>选择练习:</label>
+                <button class="btn btn-info orange darken-4 pull-right" ng-click="create(add)">新建</button>
+                <button class="btn btn-info orange darken-4 pull-right" ng-click="add = null;cancel()">取消</button>
+                <br /><br />
+                <table id="info" class="bordered highlight hoverable centered">
+                    <thead>
+                    <tr>
+                        <th>
+                            <!--<input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>-->
+                            <!--<label for="cboxchecked"></label>-->
+                        </th>
+                        <th>练习编码</th>
+                        <th>练习名称</th>
+                        <th>练习类型</th>
+                        <th>组织编码</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="practice in practices " ng-click="checkTr($event, this);$parent.add.idPractice = practice._id">
+                        <td class="forRadio">
+                            <input type="radio" id="{{practice._id}}" name="isSelected" value="{{practice}}"
+                                   ng-checked="Checked(practice._id)" ng-click="Check($event, practice._id)"/>
+                            <label for="{{practice._id}}"></label>
+                        </td>
+                        <td>{{ practice.practiceCode || "空" }}</td>
+                        <td>
+                            {{ practice.practiceName || "空" }}
+                        </td>
+                        <td>
+                            {{ practice.practiceType || "空" }}
+                        </td>
+                        <td>
+                            {{ practice.idGroup.groupName || "空" }}
+                        </td>
+                        <td>
+                            {{ practice.memo || "空" }}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary modal-trigger" ng-click="transfer(practice)">查看习题</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="loading">
+                    <pac-man></pac-man>
+                </div>
+                <ul class="pagination">
+                    <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+                    </li>
+                    <span class="paginationText">当前是第{{index}}页</span>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>

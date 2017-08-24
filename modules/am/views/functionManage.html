@@ -1,0 +1,184 @@
+<style>
+  .special{
+    background-color: #fff;
+    border: 1px solid #99cc66;
+  }
+</style>
+<div id="path">
+  <div class="title logo pull-left">
+    <font>功能管理</font>
+  </div>
+  <div class="component ">
+    <ol class="breadcrumb component pull-right">
+      <li><a class="text">权限管理</a></li>
+      <li><a class="active text">功能管理</a></li>
+    </ol>
+  </div>
+</div>
+
+<div id="main">
+  <!--<form id="search" class="back">-->
+    <!--<button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找-->
+      <!--<i class="fa fa-search"></i></button>-->
+    <!--<input type="text" id="searchContent" ng-model="searchContent"/>-->
+  <!--</form>-->
+  <div class="back">
+    <div id="tool">
+      <div id="operate" class="subtitle input-field">
+        <button class=" btn btn-primary" ng-click="modify()">修改
+          <i class="fa fa-pencil"></i></button>
+        <button class=" btn btn-primary modal-trigger" data-target="add">增加
+          <i class="fa fa-gavel"></i></button>
+        <button class="btn btn-primary" ng-click="delete()">删除
+          <i class="fa fa-eraser"></i></button>
+      </div>
+    </div>
+
+    <div id="info" class="row">
+      <!--树形图-->
+      <div class="col l3 text-left">
+        <h6>权限整体结构</h6>
+        <ul id="tree" class="ztree "></ul>
+      </div>
+      <!--<div class="col l3 text-left">-->
+        <!--&lt;!&ndash; Icons Tree &ndash;&gt;-->
+        <!--<div class="block">-->
+          <!--<div class="block-content">-->
+            <!--&lt;!&ndash; Tree View Container &ndash;&gt;-->
+            <!--<div class="js-tree-icons"></div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; END Icons Tree &ndash;&gt;-->
+      <!--</div>-->
+      <!---->
+
+      <div class="col l9 text-left special hoverable">
+        <h5>权限详细信息</h5>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="authCode" name="authCode"
+                 ng-model="auth.authCode" />
+          <label class="active" for="authCode">权限编码</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="authName" name="authName"
+                 ng-model="auth.authName" />
+          <label class="active" for="authName">权限名称</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="authType" name="authType"
+                 ng-model="auth.authType" />
+          <label class="active" for="authType">权限类型名称</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="module" name="module"
+                 ng-model="auth.module" />
+          <label class="active" for="module">所属模块</label>
+        </div>
+        <div class="input-field col s12">
+                <textarea class="materialize-textarea" rows="2" id="memo" name="memo"
+                          ng-model="auth.memo"></textarea>
+          <label class="active" for="memo">备注</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="createUser" name="createUser"
+                 ng-model="auth.createUser.userName" />
+          <label class="active" for="createUser">创建人</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="createTime" name="createTime"
+                 ng-model="auth.createTime | date:'yyyy-MM-dd HH:mm:ss'" />
+          <label class="active" for="createTime">创建时间</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="modifyUser" name="modifyUser"
+                 ng-model="auth.modifyUser.userName" />
+          <label class="active" for="modifyUser">修改人</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" class="validate" id="modifyTime" name="modifyTime"
+                 ng-model="auth.modifyTime | date:'yyyy-MM-dd HH:mm:ss'" />
+          <label class="active" for="modifyTime">修改时间</label>
+        </div>
+        <!--<table class="bordered highlight hoverable centered">-->
+          <!--<thead>-->
+          <!--<tr>-->
+            <!--<th>-->
+              <!--&lt;!&ndash;<input type="checkbox" id="allSelected" name="allSelected" value="-1"/>&ndash;&gt;-->
+              <!--&lt;!&ndash;<label for="allSelected"></label>&ndash;&gt;-->
+            <!--</th>-->
+            <!--<th>权限编码</th>-->
+            <!--<th>权限名称</th>-->
+            <!--<th>权限密码</th>-->
+            <!--<th>权限类型名称</th>-->
+            <!--<th>备注</th>-->
+            <!--&lt;!&ndash;<th></th>&ndash;&gt;-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+          <!--<tr ng-repeat="auth in auths">-->
+            <!--<td>-->
+              <!--<input type="checkbox" id="{{auth.authCode}}" name="isSelected" value="{{auth.authCode}}"/>-->
+              <!--<label for="{{auth.authCode}}"></label>-->
+            <!--</td>-->
+            <!--<td>{{ auth.authCode || "空" }}</td>-->
+            <!--<td>-->
+              <!--<a editable-text="auth.authName">{{ auth.authName || "空" }}</a>-->
+            <!--</td>-->
+            <!--<td>-->
+              <!--<a editable-text="auth.p_id">{{ auth.p_id || "空" }}</a>-->
+            <!--</td>-->
+            <!--<td>-->
+              <!--<a editable-text="auth.authType">{{ auth.authType || "空" }}</a>-->
+            <!--</td>-->
+            <!--<td>-->
+              <!--<a editable-text="auth.memo">{{ auth.memo || "空" }}</a>-->
+            <!--</td>-->
+          <!--</tr>-->
+          <!--</tbody>-->
+        <!--</table>-->
+        <!--<div class="loading">-->
+          <!--<pac-man></pac-man>-->
+        <!--</div>-->
+        <!--<ul class="pagination">-->
+          <!--&lt;!&ndash;<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>&ndash;&gt;-->
+          <!--<li ng-repeat="page in pages"><a ng-click="paginating(page)">{{page}}</a></li>-->
+          <!--<span class="paginationText">当前是第{{index}}页</span>-->
+        <!--</ul>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+<!---->
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建功能" aria-hidden="true">
+  <div class="modal-content row">
+    <h4>新建功能</h4>
+    <form id="formAdd" class="row" role="form">
+      <div class="input-field col s12">
+        <input type="text" class="validate" name="authName"
+               ng-model="add.authName" />
+        <label for="authName">权限名称</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" id="p_id" name="p_id"
+               ng-model="add.p_id" />
+        <label for="p_id">权限密码</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" class="validate" name="authType"
+               ng-model="add.authType" />
+        <label for="authType">权限类型名称</label>
+        </div>
+      <div class="input-field col s12">
+                <textarea class="materialize-textarea" rows="2" name="memo"
+                          ng-model="add.memo"></textarea>
+        <label for="memo">备注</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+  </div>
+</div>
+

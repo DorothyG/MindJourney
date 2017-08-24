@@ -1,0 +1,275 @@
+<!--<style>-->
+<!--#cardOrder{-->
+<!--min-height: 300px;-->
+<!--height: auto;-->
+<!--}-->
+<!--#cardOrder ul{-->
+<!--list-style: none;-->
+<!--}-->
+<!--.card{-->
+<!--width: 18%;-->
+<!--height: 280px;-->
+<!--margin: 0 1.5% 2% 0;-->
+<!--padding: 0.5%;-->
+<!--background-color: #ffffff;-->
+<!--box-shadow: 0 8px 6px 0 #ecefe6;-->
+<!--text-align: center;-->
+<!--display: inline-block;-->
+<!--}-->
+<!--</style>-->
+
+<div id="path">
+    <div class="title logo pull-left">
+        <font>课件资源管理</font>
+    </div>
+    <div class="component ">
+        <button class="btn toolbar pull-right"><i class="fa fa-angle-left"></i></button>
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">教学资源</a></li>
+            <li><a class="active text">课件资源管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle form-group">
+                <button class="btn btn-primary"
+                        ng-show="true" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <button class="btn btn-primary modal-trigger" data-target="add"
+                        ng-show="true">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary"
+                        ng-show="true" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>课件编号</th>
+                <th>课件名称</th>
+                <th>所属科目</th>
+                <th>所属章节</th>
+                <th>所属知识点</th>
+                <th>创建时间</th>
+                <th>创建人</th>
+                <th>所属学校</th>
+                <!--<th>idPark</th>-->
+                <!--<th>备注</th>-->
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="resource in resources" ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{resource.resourceCode}}" name="isSelected" value="{{resource}}"
+                           ng-checked="Checked(resource._id)" ng-click="Check($event, resource._id)"/>
+                    <label for="{{resource.resourceCode}}"></label>
+                </td>
+                <td>
+                    {{ resource.resourceCode || "空" }}
+                </td>
+                <td>
+                    <a editable-text="resource.resourceName">{{ resource.resourceName || "空" }}</a>
+                </td>
+                <td>
+                    <!--<a editable-text="resource.idSubject">{{ resource.idSubject.subjectName || "空" }}</a>-->
+                    <a editable-select="resource.idSubject" e-ng-options="subject.subjectName for subject in subjects">
+                        {{ resource.idSubject.subjectName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <!--<a editable-text="resource.idChapter">{{ resource.idChapter.chapterName || "空" }}</a>-->
+                    <a editable-select="resource.idChapter" e-ng-options="chapter.chapterName for chapter in chapters">
+                        {{ resource.idChapter.chapterName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <!--<a editable-text="resource.idPoint">{{ resource.idPoint.pointName || "空" }}</a>-->
+                    <a editable-select="resource.idPoint" e-ng-options="point.pointName for point in points">
+                        {{ resource.idPoint.pointName || "空" }}
+                    </a>
+                </td>
+                <td>
+                    <a editable-text="resource.createTime">
+                        {{ resource.createTime || "空" | date:'yyyy-MM-dd hh:mm:ss'}}</a>
+                </td>
+                <td>
+                    <a editable-text="resource.createUser.userName">{{ resource.createUser.userName || "空" }}</a>
+                </td>
+                <td>
+                    <!--<a editable-text="resource.idGroup">{{ resource.idGroup.groupName || "空" }}</a>-->
+                    <a editable-select="resource.idGroup"
+                       e-ng-options="group.groupName for group in groups">
+                        {{ resource.idGroup.groupName || "空" }}
+                    </a>
+                </td>
+                <!--<td>-->
+                <!--<a editable-text="resource.idPark">{{ resource.idPark || "空" }}</a>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<a editable-text="resource.memo">{{ resource.memo || "空" }}</a>-->
+                <!--</td>-->
+                <td>
+                    <button class="btn btn-primary modal-trigger" data-target="view" ng-click="transfer(resource)">查看
+                    </button>
+                    <!--<a class="btn btn-info" ng-show="true"-->
+                    <!--href="http://120.77.253.155{{resource.resourceFile[0].idFile.filePath}}" >下载附件</a>-->
+                    <!--<span ng-show="false">暂无附件</span>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<!---->
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="增加新课件" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>增加新课件</h4>
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="resourceName" name="resourceName"
+                       ng-model="add.resourceName"/>
+                <label for="resourceName">课件名称</label>
+            </div>
+            <div class="col s12">
+                <select class="form-control" ng-model="add.idSubject"
+                        ng-options="subject._id as subject.subjectName for subject in subjects">
+                    <option value="" disabled selected>所属科目</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <!--<input type="text" class="validate" id="idSubject" name="idSubject"-->
+                <!--ng-model="add.idSubject" />-->
+                <br/>
+            </div>
+            <div class="col s12">
+                <!--filter: {idSubject: add.idSubject}-->
+                <select class="form-control" ng-model="add.idChapter" ng-options="chapter._id as chapter.chapterName for chapter in chapters">
+                    <option value="" disabled selected>所属章节</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <!--<input type="text" class="validate" id="idSubject" name="idSubject"-->
+                <!--ng-model="add.idSubject" />-->
+                <br/>
+            </div>
+            <div class="col s12">
+                <!--| filter: {idChapter : add.idChapter} && {idSubject: add.idSubject}-->
+                <select class="form-control" ng-model="add.idPoint" ng-options="point._id as point.pointName for point in points">
+                    <option value="" disabled selected>所属知识点</option>
+                    <!--<option value="{{subject._id}}">{{subject.subjectName}}</option>-->
+                </select>
+                <!--<input type="text" class="validate" id="idSubject" name="idSubject"-->
+                <!--ng-model="add.idSubject" />-->
+            </div>
+            <!--<div class="input-field col s12">-->
+            <!--<input type="text" class="validate" id="idChapter" name="idChapter"-->
+            <!--ng-model="add.idChapter" />-->
+            <!--<label for="idChapter">所属章节</label>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12">-->
+            <!--<input type="text" class="validate" id="idPoint" name="idPoint"-->
+            <!--ng-model="add.idPoint" />-->
+            <!--<label for="idPoint">所属知识点</label>-->
+            <!--</div>-->
+            <div class="input-field col s12">
+                <div class="col-sm-12">
+          <textarea class="form-control" data-provider="markdown" rows="10" id="resourceContent" name="resourceContent"
+                    ng-model="add.resourceContent"></textarea>
+                    <label for="resourceContent">课件正文</label>
+                </div>
+            </div>
+            <div class="input-field col s12">
+                <div class="file-field input-field">
+                    <div class="btn btn-primary">
+                        <span>附件</span>
+                        <input type="file" id="fileInput" name="anFiles" file-model="add.idFiles"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text"/>
+                    </div>
+                </div>
+            </div>
+            <div class="fileLoading">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+                <p>文件上传中,进度:{{progress}}%</p>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="Grade" name="Grade"
+                       ng-model="add.Grade"/>
+                <label for="Grade">年级</label>
+            </div>
+            <!--<div class="input-field col s12">-->
+            <!--<input type="text" class="validate" id="idGroup" name="idGroup"-->
+            <!--ng-model="add.idGroup" />-->
+            <!--<label for="idGroup">所属学校</label>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12">-->
+            <!--<input type="text" class="validate" id="idPark" name="idPark"-->
+            <!--ng-model="add.idPark" />-->
+            <!--<label for="idPark">idPark</label>-->
+            <!--</div>-->
+            <div class="input-field col s12">
+                <textarea class="materialize-textarea" rows="2" id="memo" name="memo"
+                          ng-model="add.memo"></textarea>
+                <label for="memo">备注</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action waves-effect waves-green btn-flat" ng-disabled="add == null" ng-click="create(add)">
+            新建
+        </button>
+        <button class="modal-action waves-effect waves-green btn-flat" ng-click="add = null;Reset()">重置</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="add = null;Reset()">取消</button>
+    </div>
+</div>
+
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看课件" aria-hidden="true">
+    <div class="modal-content">
+        <h4>查看课件</h4>
+        <div class="input-field col s12">
+            <label>课件正文</label><br /><br />
+            <a editable-textarea="view.resourceContent">{{view.resourceContent || '空'}}</a>
+        </div>
+        <div class="input-field col s12">
+            <a ng-show="view.resourceFile != null" ng-repeat="files in view.resourceFile"
+               href="http://120.77.253.155/{{files.idFile.filePath}}">{{files.idFile.fileName}}</a>
+            <span ng-show="view.resourceFile == null">暂无附件</span>
+        </div>
+        <div class="input-field col s12">
+            <label>备注</label><br /><br />
+            <a id="memory" editable-textarea="view.memo">{{view.memo || '空'}}</a>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="ok(view);Show = true">
+            确定修改
+        </button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

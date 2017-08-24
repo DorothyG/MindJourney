@@ -1,0 +1,226 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>习题列表</font>
+    </div>
+    <div class="component ">
+        <button class="btn toolbar pull-right" ng-click="Return()"><i
+                class="fa fa-angle-left"></i></button>
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">教学资源</a></li>
+            <li><a class="text">练习管理</a></li>
+            <li><a class="active text">习题列表</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main" ng-init="isAdd = false">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back" class="row">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class="btn btn-primary" ng-show="isAdd == false" ng-click="isAdd = true;loadQuestion()">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary" ng-show="isAdd == false" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-show="isAdd == false" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+
+                <button class="btn btn-info orange darken-4"
+                        ng-show="isAdd == true" ng-click="modify(add)">确定</button>
+                <button class="btn btn-info orange darken-4"
+                        ng-show="isAdd == true" ng-click="isAdd = false;">取消</button>
+                <button class="btn btn-primary right"
+                        ng-show="isAdd == true" ng-click="refreshQuestion()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <div class="innerBack" ng-show="!isAdd">
+            <h5>{{practice.practiceName}}</h5>
+            <div class="back row" ng-repeat="list in practice.practiceList">
+                <div class="col s1">
+                    <span class="input-field optionHead">
+                        <input type="checkbox" id="{{list._id}}" name="isSelected" value="{{list}}"/>
+                    <label for="{{list._id}}"></label>
+                    </span>
+                    <!--用来查看题目的详细信息-->
+                    <a class="forMore" data-target="moreInfo" ng-click="transfer(list)"><i class="fa fa-angle-double-down"></i></a>
+                    <!----------------------->
+                </div>
+                <div class="col s11">
+                    <div class="innerBack" ng-show="list.idQuestion.idType.typeName == '选择题'">
+                        <div class="innerText">
+                            {{$index + 1}}.<span ng-bind-html="list.idQuestion.questionContent | trustHtml"></span>
+                        </div>
+                        <div class="inner">A.{{list.idQuestion.answerA}}</div>
+                        <div class="inner">B.{{list.idQuestion.answerB}}</div>
+                        <div class="inner">C.{{list.idQuestion.answerC}}</div>
+                        <div class="inner">D.{{list.idQuestion.answerD}}</div>
+                        <div class="innerContent">正确答案:{{list.idQuestion.trueAnswer}}</div>
+                        <div class="innerContent">
+                            解析:<span ng-bind-html="list.idQuestion.analysis | trustHtml"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s11">
+                    <div class="innerBack" ng-show="list.idQuestion.idType.typeName == '主观题'">
+                        <div class="innerText">
+                            {{$index + 1}}.<span ng-bind-html="list.idQuestion.questionContent | trustHtml"></span>
+                        </div>
+                        <div class="innerContent">正确答案:{{list.idQuestion.trueAnswer}}</div>
+                        <div class="innerContent">
+                            解析:<span ng-bind-html="list.idQuestion.analysis | trustHtml"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="isAdd">
+            <table id="info" class="bordered highlight hoverable centered" >
+                <thead>
+                <tr>
+                    <th class="forCheckbox">
+                        <!--<input class="states" type="checkbox" id="cboxchecked"-->
+                        <!--ng-click="add.practiceList = [];checkAll()"/>-->
+                        <!--<label for="cboxchecked"></label>-->
+                    </th>
+                    <th>所属科目</th>
+                    <th>所属章节</th>
+                    <th>所属知识点</th>
+                    <th>所属年级</th>
+                    <th>题型</th>
+                    <th>困难度</th>
+                    <th>备注</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="question in questions" ng-click="checkTr($event, this)">
+                    <td class="forCheckbox">
+                        <input type="checkbox" id="{{question._id}}" name="isSelected" value="{{question}}"
+                               ng-checked="Checked(question._id)" ng-click="Check($event, question._id)"/>
+                        <label for="{{question._id}}"></label>
+                    </td>
+                    <td>
+                        {{ question.idSubject.subjectName || "空" }}
+                    </td>
+                    <td>
+                        {{ question.idChapter.chapterName || "空" }}
+                    </td>
+                    <td>
+                        {{ question.idPoint.pointName || "空" }}
+                    </td>
+                    <td>
+                        {{ question.Grade || "空" }}
+                    </td>
+                    <td>
+                        {{ question.idType.typeName || "空" }}
+                    </td>
+                    <td>
+                        {{ question.difficulty || "空" }}
+                    </td>
+                    <td>
+                        {{ question.memo || "空" }}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" data-target="view"
+                           ng-click="View(question)">查看</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="loading">
+                <pac-man></pac-man>
+            </div>
+            <ul class="pagination">
+                <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a
+                        ng-click="paginating(page)">{{page}}</a>
+                </li>
+                <span class="paginationText">当前是第{{index}}页</span>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看题目" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>查看题目</h4>
+        <div class="input-field col s12">
+            <label>问题正文</label><br /><br />
+            <div ng-bind-html="view.questionContent || '空' | trustHtml"></div>
+        </div>
+        <div class="input-field col s12">
+            <label>A选项</label><br /><br />
+            {{ view.answerA || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>B选项</label><br /><br />
+            {{ view.answerB || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>C选项</label><br /><br />
+            {{ view.answerC || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>D选项</label><br /><br />
+            {{ view.answerD || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>正确答案</label><br /><br />
+            {{ view.trueAnswer || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>解析</label><br /><br />
+            <div ng-bind-html="view.analysis || '空' | trustHtml"></div>
+        </div>
+        <!--</form>-->
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>
+<div id="moreInfo" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看题目详细信息" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>查看题目详细信息</h4>
+        <div class="input-field col s12">
+            <label>题目编号</label><br /><br />
+            {{ more.questionCode || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>难度</label><br /><br />
+            {{ more.difficulty || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>所属科目</label><br /><br />
+            {{ more.idSubject.subjectName || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>所属章节</label><br /><br />
+            {{ more.idChapter.chapterName || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>所属知识点</label><br /><br />
+            {{ more.idPoint.pointName || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>所属学校</label><br /><br />
+            {{ more.idGroup.groupName || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>创建者</label><br /><br />
+            {{ more.createUser.userName || "空" }}
+        </div>
+        <div class="input-field col s12">
+            <label>创建时间</label><br /><br />
+            {{ more.createTime || "空" | date:"yyyy-MM-dd hh:dd:ss" }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

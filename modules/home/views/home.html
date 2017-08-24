@@ -1,0 +1,184 @@
+<style>
+  #waterfall{
+    width: 100%;
+    background-color: #d6e4db;
+    margin: 0;
+  }
+  #waterfallList{
+    position: relative;
+    list-style: none;
+  }
+  #waterfallList li{
+    display: none;
+    //border: 1px solid #444d53;
+    border-radius: 4px;
+    background-color: #e9f7ee;
+    box-shadow: 4px 4px 4px 0 #d6e4db;
+  }
+  .info{
+    height:40px;
+    font-size: 18px;
+    color: #ED6E25;
+    padding: 10px 8px 10px 8px;
+    text-align: left;
+    //line-height: 40px;
+  }
+  .infoSmall{
+    font-weight: lighter;
+    font-size: 14px;
+    margin: 0;
+  }
+  #tool{
+    width: 100%;
+    height: 48px;
+    background-color: #d6e4db;
+    margin: 20px 0 0 0;
+    padding: 10px;
+  }
+  #subtitle{
+    color: #ED6E25;
+    font-size: 18px;
+    border-left: 2px solid #67bd45;
+    border-bottom: 2px solid #67bd45;
+    padding: 6px;
+  }
+  #lines{
+    width: 100%;
+    height: auto;
+    background-color: #d6e4db;
+    margin: 0;
+    padding: 10px;
+    display: none;
+  }
+  #linesBody{
+    list-style: none;
+  }
+  .line{
+    display: inline-block;
+    margin: 0 1.5% 0 3%;
+  }
+  .linesApart{
+    width: 100%;
+    background-color: #d6e4db;
+    color: #444d53;
+  }
+  .linesApart li a{
+    color: #444d53;
+  }
+  .imgSmall{
+    width: 300px;
+    height: 260px;
+  }
+  .imgCarousel{
+    width: 600px;
+  }
+</style>
+
+<div id="path">
+  <div class="title logo pull-left">
+    <font>首页</font>
+  </div>
+  <div class="component ">
+    <a class="btn btn-info toolbar pull-right z-depth-1 cyan lighten-2" data-ui-sref="index.announce" data-ui-sref-active="active"><i class="fa fa-plus"></i></a>
+    <ol class="breadcrumb component pull-right">
+      <li><a class="active text">首页</a></li>
+    </ol>
+  </div>
+</div>
+
+<div id="main">
+  <!--materialize图片轮播-->
+  <!--<div class="carousel1">-->
+    <!--<a class="carousel-item" href="#one!" >-->
+      <!--<img src="components/common/images/carousel0.jpg" alt="FirstSlide" width="600" />-->
+    <!--</a>-->
+    <!--<a class="carousel-item" href="#two!" >-->
+      <!--<img src="components/common/images/carousel0.jpg" alt="SecondSlide" width="600" />-->
+    <!--</a>-->
+    <!--<a class="carousel-item" href="#three!" >-->
+      <!--<img src="components/common/images/carousel0.jpg" alt="SecondSlide" width="600" />-->
+    <!--</a>-->
+  <!--</div>-->
+
+  <!-- 图片轮播 -->
+  <div id="carouselBroadcast" class="carousel slide" data-ride="carousel">
+    <!-- 轮播指标 -->
+    <ol class="carousel-indicators">
+      <li data-target="#carouselBroadcast" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselBroadcast" data-slide-to="1"></li>
+      <li data-target="#carouselBroadcast" data-slide-to="2"></li>
+    </ol>
+    <!-- 轮播项目 -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="components/common/images/carousel0.jpg" class="responsive-img" alt="FirstSlide" />
+        <div class="carousel-caption">这是第一张幻灯片</div>
+      </div>
+      <div class="item">
+        <img src="components/common/images/carousel0.jpg" class="responsive-img" alt="FirstSlide" />
+        <div class="carousel-caption">这是第二张幻灯片</div>
+      </div>
+      <div class="item">
+        <img src="components/common/images/carousel0.jpg" class="responsive-img" alt="FirstSlide" />
+        <div class="carousel-caption">这是第三张幻灯片</div>
+      </div>
+    </div>
+    <!-- 轮播导航 -->
+    <a class="carousel-control left" href="#carouselBroadcast" role="button" data-slide="prev"></a>
+    <a class="carousel-control right" href="#carouselBroadcast" role="button" data-slide="next"></a>
+  </div>
+  <div id="tool">
+    <div class="subtitle pull-left">
+      通知公告
+    </div>
+    <!--<div class="pull-right">-->
+      <!--<button class="btn" waterfall-and-lines><i class="fa fa-list"></i>&nbsp;/&nbsp;<i class="fa fa-th"></i></button>-->
+    <!--</div>-->
+  </div>
+  <div id="waterfall">
+    <ul id="waterfallList">
+      <!--ng-repeat="announce in announces"-->
+      <li>
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator imgSmall" src="components/common/images/avator.jpg" />
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">这是一则通知
+              <i class="fa fa-bars pull-right"></i>
+            </span>
+            <p>2017-1-1 18:30
+            </p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">这是一则通知
+              <i class="fa fa-close pull-right"></i>
+            </span>
+            <p>Blabalabalabala......</p>
+          </div>
+        </div>
+      </li>
+      <!--<li>-->
+        <!--<div class="card">-->
+          <!--<div class="card-image waves-effect waves-block waves-light">-->
+            <!--<img class="activator imgSmall" src="components/common/images/avator.jpg" />-->
+          <!--</div>-->
+          <!--<div class="card-content">-->
+            <!--<span class="card-title activator grey-text text-darken-4" ng-bind="announce.announcementName">-->
+              <!--<i class="fa fa-bars pull-right"></i>-->
+            <!--</span>-->
+            <!--<p ng-bind="announce.announcementTime">-->
+            <!--</p>-->
+          <!--</div>-->
+          <!--<div class="card-reveal">-->
+            <!--<span class="card-title grey-text text-darken-4" ng-bind="announce.announcementName">-->
+              <!--<i class="fa fa-close pull-right"></i>-->
+            <!--</span>-->
+            <!--<p ng-bind="announce.announcementContent"></p>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</li>-->
+    </ul>
+  </div>
+</div>
+

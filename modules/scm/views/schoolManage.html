@@ -1,0 +1,121 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>学校管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="active text">学校管理</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class="btn btn-primary"
+                        ng-show="true" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <button class="btn btn-primary modal-trigger" data-target="add">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary"
+                        ng-show="true" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>学校编号</th>
+                <th>学校名称</th>
+                <th>联系方式</th>
+                <th>地址</th>
+                <th>简介</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="school in schools" ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{school.groupCode}}" name="isSelected" value="{{school}}"
+                           ng-checked="Checked(school._id)" ng-click="Check($event, school._id)"/>
+                    <label for="{{school.groupCode}}"></label>
+                </td>
+                <td>{{ school.groupCode || "空" }}</td>
+                <td>
+                    <a editable-text="school.groupName">{{ school.groupName || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="school.telephone">{{ school.telephone || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="school.address">{{ school.address || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="school.introduction">{{ school.introduction || "空" }}</a>
+                </td>
+                <td>
+                    <a editable-text="school.memo">{{ school.memo || "空" }}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<!---->
+<div id="add" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="新建学校" aria-hidden="true">
+    <div class="modal-content row">
+        <h4>新建学校</h4>
+        <form id="formAdd" class="row" role="form">
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="groupName" name="groupName"
+                       ng-model="add.groupName" />
+                <label for="groupName">学校名称</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="telephone" name="telephone"
+                       ng-model="add.telephone" />
+                <label for="telephone">联系方式</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="address" name="address"
+                       ng-model="add.address" />
+                <label for="address">地址</label>
+            </div>
+            <div class="input-field col s12">
+                <input type="text" class="validate" id="introduction" name="introduction"
+                       ng-model="add.introduction" />
+                <label for="introduction">学校简介</label>
+            </div>
+            <div class="input-field col s12">
+                <textarea class="materialize-textarea" rows="2" id="memo" name="memo"
+                          ng-model="add.memo"></textarea>
+                <label for="memo">备注</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="create(add)">新建</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

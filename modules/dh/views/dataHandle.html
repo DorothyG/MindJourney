@@ -1,0 +1,98 @@
+<div id="path">
+    <div class="title logo pull-left">
+        <font>规则管理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">数据处理</a></li>
+            <li><a class="active text">规则管理</a></li>
+        </ol>
+    </div>
+</div>
+
+<div id="main">
+    <form id="search" class="back">
+        <button class="btn btn-primary" id="searchBtn" ng-click="search(searchContent)">查找
+            <i class="fa fa-search"></i></button>
+        <input type="text" id="searchContent" ng-model="searchContent"/>
+    </form>
+    <div class="back">
+        <div id="tool">
+            <div id="operate" class="subtitle input-field">
+                <button class="btn btn-primary" ng-click="modify()">修改
+                    <i class="fa fa-pencil"></i></button>
+                <!--<button class="btn btn-primary modal-trigger" data-target="add">增加-->
+                <!--<i class="fa fa-gavel"></i></button>-->
+                <button class="btn btn-primary" ng-click="add()">增加
+                    <i class="fa fa-gavel"></i></button>
+                <button class="btn btn-primary" ng-click="delete()">删除
+                    <i class="fa fa-eraser"></i></button>
+                <button class="btn btn-primary right" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+        <table id="info" class="bordered highlight hoverable centered">
+            <thead>
+            <tr>
+                <th class="forCheckbox">
+                    <input class="states" type="checkbox" id="cboxchecked" ng-click="checkAll()"/>
+                    <label for="cboxchecked"></label>
+                </th>
+                <th>规则编码</th>
+                <th>规则名称</th>
+                <th>组织编码</th>
+                <th>创建人</th>
+                <!--<th>创建时间</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="rule in rules " ng-click="checkTr($event, this)">
+                <td class="forCheckbox">
+                    <input type="checkbox" id="{{rule._id}}" name="isSelected" value="{{rule}}"
+                           ng-checked="Checked(rule._id)" ng-click="Check($event, rule._id)"/>
+                    <label for="{{rule._id}}"></label>
+                </td>
+                <td>{{ rule.ruleCode || "空" }}</td>
+                <td>
+                    <a editable-text="rule.ruleName">{{ rule.ruleName || "空" }}</a>
+                </td>
+                <td>
+                    {{ rule.idGroup.groupName || "空" }}
+                </td>
+                <td>
+                    {{ rule.createUser.userName || "空" }}
+                </td>
+                <!--<td>-->
+                    <!--{{ rule.createTime || "空" | date:'yyyy-MM-dd HH:mm:ss' }}-->
+                <!--</td>-->
+                <td>
+                    <button class="btn btn-primary modal-trigger" data-target="view" ng-click="transfer(rule)">查看内容</button>
+                    <button class="btn btn-primary modal-trigger" ng-click="modi(rule)">修改内容</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="loading">
+            <pac-man></pac-man>
+        </div>
+        <ul class="pagination">
+            <!--<li><a ng-click="loadAllData()"><span class="paginationText">首页</span></a></li>-->
+            <li ng-repeat="page in pages" ng-class="c[$index] == true? 'active' : ''"><a ng-click="paginating(page)">{{page}}</a>
+            </li>
+            <span class="paginationText">当前是第{{index}}页</span>
+        </ul>
+    </div>
+</div>
+<div id="view" class="modal modal-fixed-footer" tabindex="-1" role="dialog" aria-labelledby="查看内容" aria-hidden="true">
+    <div class="modal-content">
+        <h4>查看内容</h4>
+        <div class="input-field col s12">
+            <label>规则内容</label><br /><br />
+            <span>{{view.ruleContent}}</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat">取消</button>
+    </div>
+</div>

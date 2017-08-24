@@ -1,0 +1,173 @@
+<style>
+    .back {
+        width: 100%;
+        height: auto;
+        background-color: #d6e4db;
+        margin: 6px 0;
+        padding: 10px;
+    }
+
+    .operator {
+        font-size: 20px;
+    }
+
+    .lableText {
+        font-size: 14px;
+        color: #3f3f3f;
+        padding: 10px 0;
+    }
+    .tabs{
+        color: #67bd45;
+    }
+    .innerBack{
+        margin: 0;
+        padding: 10px;
+    }
+    .buttonField{
+        padding: 20px;
+    }
+    .modiNav{
+        height: 30px; !important;
+        font-size: 14px; !important;
+    }
+    /*.model{*/
+        /*height: 70%;*/
+        /*overflow: auto;*/
+        /*margin: 40px 0 0 0;*/
+    /*}*/
+</style>
+<div id="path">
+    <div class="title logo pull-left">
+        <font>数据处理</font>
+    </div>
+    <div class="component ">
+        <ol class="breadcrumb component pull-right">
+            <li><a class="text">数据处理</a></li>
+            <li><a class="active text">规则管理</a></li>
+            <li><a class="active text">规则</a></li>
+        </ol>
+    </div>
+</div>
+<div id="main">
+    <div class="back row">
+        <!--<div id="tool ">-->
+        <div id="operate" style="padding: 0" class="subtitle form-group col s3 row">
+            <div class="col s12 row" ng-init="add = {}">
+                <ul class="tabs">
+                    <li class="tab col s6"><a class="active" href="#exam">考试</a></li>
+                    <li class="tab col s6"><a href="#practice">练习</a></li>
+                </ul>
+                <div id="exam" class="innerBack">
+                    <!--{{examModels}}-->
+                    <ul class="modiNav nav nav-stacked" ng-repeat="examModel in examModels">
+                        <li>
+                            <a ng-click="$parent.operator = examModel;concat($parent.operator)">{{examModel}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="practice" class="innerBack">
+                    <ul class="modiNav nav nav-stacked" ng-repeat="practiceModel in practiceModels">
+                        <li>
+                            <a ng-click="$parent.operator = practiceModel;concat($parent.operator)">{{practiceModel}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--</div>-->
+        <div style="padding: 0; margin: -4px" class="innerBack col s9 row">
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <input type="text" class="validate" id="ruleName" name="ruleName"
+                           ng-model="add.ruleName"/>
+                    <label for="ruleName">规则名称</label>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="lableText">基本运算符:</div>
+                <button class="btn" ng-click="operator = '+';concat(operator)">
+                    <span class="operator">+</span>
+                </button>
+                <button class="btn" ng-click="operator = '-';concat(operator)">
+                    <span class="operator">-</span>
+                </button>
+                <button class="btn" ng-click="operator = '*';concat(operator)">
+                    <span class="operator">×</span>
+                </button>
+                <button class="btn" ng-click="operator = '/';concat(operator)">
+                    <span class="operator">/</span>
+                </button>
+                <button class="btn" ng-click="operator = '(';concat(operator)">
+                    <span class="operator">(</span>
+                </button>
+                <button class="btn" ng-click="operator = ')';concat(operator)">
+                    <span class="operator">)</span>
+                </button>
+            </div>
+            <div class="form-group col s2">
+                <div class="lableText">高级运算符:</div>
+                <button class="btn" ng-click="concat('√')">
+                    <span class="operator">√</span>
+                </button>
+                <button class="btn" ng-click="concat('∧')">
+                    <span class="operator">∧</span>
+                </button>
+            </div>
+            <div class="col s6">
+                <div class="buttonField">
+                    <button class="btn btn-info orange darken-4 right"
+                            ng-show="ruleCode == 0" ng-click="create(add)">确定</button>
+                    <button class="btn btn-info orange darken-4 right"
+                            ng-show="ruleCode == 0" ng-click="goback()">取消</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-info orange darken-4 right"
+                            ng-show="ruleCode == 0" ng-click="back(operator)">后退</button>
+                    <button class="btn btn-info orange darken-4 right"
+                            ng-show="ruleCode == 0" ng-click="add.ruleContent = '';cancel()">清空</button>
+
+                    <button class="btn btn-info orange darken-4 right"
+                            ng-show="ruleCode != 0" ng-click="modify(add)">修改</button>
+                    <button class="btn btn-info orange darken-4 right"
+                            ng-show="ruleCode != 0" ng-click="cancelModify()">取消</button>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="lableText">数字:</div>
+                <button class="btn" ng-click="operator = '0';concat(operator)">
+                    <span class="operator">0</span>
+                </button>
+                <button class="btn" ng-click="operator = '1';concat(operator)">
+                    <span class="operator">1</span>
+                </button>
+                <button class="btn" ng-click="operator = '2';concat(operator)">
+                    <span class="operator">2</span>
+                </button>
+                <button class="btn" ng-click="operator = '3';concat(operator)">
+                    <span class="operator">3</span>
+                </button>
+                <button class="btn" ng-click="operator = '4';concat(operator)">
+                    <span class="operator">4</span>
+                </button>
+                <button class="btn" ng-click="operator = '5';concat(operator)">
+                    <span class="operator">5</span>
+                </button>
+                <button class="btn" ng-click="operator = '6';concat(operator)">
+                    <span class="operator">6</span>
+                </button>
+                <button class="btn" ng-click="operator = '7';concat(operator)">
+                    <span class="operator">7</span>
+                </button>
+                <button class="btn" ng-click="operator = '8';concat(operator)">
+                    <span class="operator">8</span>
+                </button>
+                <button class="btn" ng-click="operator = '9';concat(operator)">
+                    <span class="operator">9</span>
+                </button>
+            </div>
+            <div class="col s12">
+                <textarea class="materialize-textarea" ng-model="add.ruleContent" value="{{add.ruleContent}}" placeholder="算术式" readonly></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>

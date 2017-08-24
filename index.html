@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html ng-app="mindjourney" >
+  <head>
+    <meta charset="utf-8" />
+    <title>Mind Journey 智慧教室平台</title>
+    <meta name="author" content="MJ">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <!--允许跨域请求-->
+    <!--<meta http-equiv="Access-Control-Allow-Origin" content="*">-->
+    <title>index</title>
+      <link href="components/common/css/common.css" rel="stylesheet" />
+    <link href="components/common/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="lib/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <link href="lib/materialize/css/materialize.css" rel="stylesheet" />
+    <link href="lib/AngularJs-xeditable/css/xeditable.css" rel="stylesheet" />
+    <link href="lib/bootstrap-select-1.12.2/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <!--<link href="lib/wangEditor/css/wangEditor.min.css" rel="stylesheet" />-->
+    <!--<link href="lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />-->
+    <!--<link href="lib/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" />-->
+    <link href="components/common/css/loaders.css" rel="stylesheet" />
+    <link href="lib/mCustomScrollBar/jquery.mCustomScrollbar.min.css" />
+  </head>
+  <body>
+    <!-- <hr class="decoration" /> -->
+    <div class="{{$state.current.name}}" ui-view=""></div>
+    <!--<div id="index" class="container-fluid">-->
+      <!--<div id="content" class="row">-->
+        <!--&lt;!&ndash; 左侧导航栏 &ndash;&gt;-->
+        <!--<div ng-include="'modules/common/views/navLeft.html'" ng-controller="navLeftCtrl"-->
+             <!--id="navLeft" class="col l2 m1 s1" ></div>-->
+        <!--&lt;!&ndash; 主内容 &ndash;&gt;-->
+        <!--<div ui-view="" id="platform" class="col l10 m11 s11"></div>-->
+      <!--</div>-->
+      <!--&lt;!&ndash; 顶部导航栏 &ndash;&gt;-->
+      <!--<div ng-include="'modules/common/views/navTop.html'" ng-controller="navTopCtrl"-->
+           <!--id="navTop" class="row"></div>-->
+    <!--</div>-->
+
+    <!--幕布-->
+    <div class="curtain">
+      <wave-randomly></wave-randomly>
+    </div>
+
+    <!-- 引用的库文件 -->
+    <!--bootstrap-->
+    <!--<script src="lib/angular-summernote-master/dist/jquery-2.2.1.min.js"></script>-->
+    <script src="lib/jquery-3.1.1/jquery-3.1.1.min.js"></script>
+    <script src="lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="lib/bootstrap-markdown/js/bootstrap-markdown.js"></script>-->
+    <script src="lib/materialize/js/materialize.js"></script>
+    <script src="lib/mCustomScrollBar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!--Angularjs-->
+    <script src="lib/AngularJs-1.6.1/angular.min.js"></script>
+    <script src="lib/AngularJs-ui-bootstrap/ui-bootstrap-tpls-1.3.1.min.js"></script>
+    <!--<script src="lib/wangEditor/js/wangEditor.min.js"></script>-->
+    <!--<script src="lib/angular.min.js"></script>-->
+    <script src="lib/AngularJs-xeditable/js/xeditable.js"></script>
+    <script src="lib/AngularJs-ui-router/angular-ui-router.js"></script>
+    <script src="lib/ocLazyLoad/ocLazyLoad.min.js"></script>
+    <script src="lib/ngStorage-master/ngStorage.min.js"></script>
+    <script src="lib/AngularJs-cookies/angular-cookies.min.js"></script>
+    <script src="lib/AngularJs-sanitize/angular-sanitize.min.js"></script>
+
+    <!-- angular有关的js文件 -->
+    <script src="app.js"></script>
+    <script src="components/router.js"></script>
+    <!-- controllers -->
+    <script src="modules/common/controllers/indexCtrl.js"></script>
+    <script src="modules/common/controllers/navTopCtrl.js"></script>
+    <script src="modules/common/controllers/navLeftCtrl.js"></script>
+    <script src="modules/common/controllers/sideNavCtrl.js"></script>
+    <script src="modules/common/controllers/loginCtrl.js"></script>
+
+    <script src="modules/home/controllers/homeCtrl.js"></script>
+    <script src="modules/home/an/controllers/announceCtrl.js"></script>
+
+    <script src="modules/sm/controllers/studentInfoCtrl.js"></script>
+    <script src="modules/tm/controllers/teacherInfoCtrl.js"></script>
+    <script src="modules/pm/controllers/parentsInfoCtrl.js"></script>
+
+    <script src="modules/lr/sm/controllers/subjectDefiCtrl.js"></script>
+    <script src="modules/lr/sm/controllers/chapterDefiCtrl.js"></script>
+    <script src="modules/lr/sm/controllers/pointDefiCtrl.js"></script>
+
+    <script src="modules/lr/controllers/resourceManageCtrl.js"></script>
+    <script src="modules/lr/controllers/practiceManageCtrl.js"></script>
+    <script src="modules/lr/controllers/practiceCreateCtrl.js"></script>
+    <script src="modules/lr/controllers/practiceListCtrl.js"></script>
+    <script src="modules/lr/controllers/classBeforeCtrl.js"></script>
+    <script src="modules/lr/controllers/classBeforeCreateCtrl.js"></script>
+    <script src="modules/lr/controllers/classOnCtrl.js"></script>
+    <script src="modules/lr/controllers/classOnCreateCtrl.js"></script>
+    <script src="modules/lr/controllers/classOnListCtrl.js"></script>
+    <script src="modules/lr/controllers/classAfterCtrl.js"></script>
+    <script src="modules/lr/controllers/classAfterCreateCtrl.js"></script>
+    <script src="modules/lr/controllers/classAfterListCtrl.js"></script>
+
+    <script src="modules/lr/controllers/examManageCtrl.js"></script>
+    <script src="modules/lr/controllers/examCreateCtrl.js"></script>
+    <script src="modules/lr/pc/controllers/paperManageCtrl.js"></script>
+    <script src="modules/lr/pc/controllers/paperListCtrl.js"></script>
+
+    <script src="modules/qm/controllers/questionTypesCtrl.js"></script>
+    <script src="modules/qm/controllers/questionsCtrl.js"></script>
+    <script src="modules/qm/controllers/questionInCtrl.js"></script>
+    <script src="modules/qm/controllers/questionFavoCtrl.js"></script>
+
+    <script src="modules/dh/controllers/dataHandleCtrl.js"></script>
+    <script src="modules/dh/controllers/dataHandleCreateCtrl.js"></script>
+
+    <script src="modules/cc/controllers/postInfoCtrl.js"></script>
+    <script src="modules/cc/controllers/postManageCtrl.js"></script>
+    <script src="modules/cc/controllers/complaintManageCtrl.js"></script>
+
+    <script src="modules/scm/controllers/schoolManageCtrl.js"></script>
+
+    <script src="modules/am/controllers/userManageCtrl.js"></script>
+    <script src="modules/am/controllers/roleManageCtrl.js"></script>
+    <script src="modules/am/controllers/functionManageCtrl.js"></script>
+    <!-- directives -->
+    <!--<script src="components/directives/sideNavDire.js"></script>-->
+    <script src="components/directives/navLeftShowChangeDire.js"></script>
+    <script src="components/directives/waterfallAndLinesDire.js"></script>
+    <script src="components/directives/fileinputInitializedDire.js"></script>
+    <script src="components/directives/markdownInitializedDire.js"></script>
+    <script src="components/directives/waveRandomlyDire.js"></script>
+    <script src="components/directives/pacManDire.js"></script>
+    <script src="components/directives/fileModel.js"></script>
+    <!--service-->
+    <script src="components/service/handleData.js"></script>
+    <script src="components/service/doPagination.js"></script>
+    <script src="components/service/fileUpload.js"></script>
+    <script src="components/service/authService.js"></script>
+    <script src="components/service/transferValues.js"></script>
+    <!--filters-->
+    <script src="components/filters/trustHtmlFilt.js"></script>
+
+  </body>
+</html>
